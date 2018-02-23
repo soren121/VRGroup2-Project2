@@ -6,7 +6,7 @@ public class GameManager: MonoBehaviour {
 
 	public GameObject vrCameraRig;
 	public GameObject nonVRCameraRig;
-	public Blinker hmdBlinker;
+	//public Blinker hmdBlinker;
 	public SteamVR_TrackedObject hmd;
 	public SteamVR_TrackedObject controllerLeft;
 	public SteamVR_TrackedObject controllerRight;

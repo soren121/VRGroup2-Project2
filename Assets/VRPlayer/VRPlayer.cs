@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.VR;
 using UnityEngine.Networking;
 public class VRPlayer : NetworkBehaviour {
-	public Blinker hmdBlinker;
+	//public Blinker hmdBlinker;
 	public Transform SteamVR_Rig;
 	public SteamVR_TrackedObject hmd;
 	public SteamVR_TrackedObject controllerLeft;
@@ -50,7 +50,7 @@ public class VRPlayer : NetworkBehaviour {
 					hmd = gm.hmd;
 					controllerLeft = gm.controllerLeft;
 					controllerRight = gm.controllerRight;
-					hmdBlinker = gm.hmdBlinker;
+					//hmdBlinker = gm.hmdBlinker;
 				}
 				//the controllers are the easy ones, just move them directly
 				copyTransform(controllerLeft.transform, handLeft.transform);
@@ -192,7 +192,7 @@ public class VRPlayer : NetworkBehaviour {
 
 	public void teleport(Vector3 pos, Vector3 forward)
 	{
-		hmdBlinker.blink(.1f);
+		//hmdBlinker.blink(.1f);
 		Vector3 offset = pos-feet.position;
 		SteamVR_Rig.Translate(offset, Space.World);
 		Vector3 facingDirection = new Vector3(head.forward.x,0,head.forward.z);
