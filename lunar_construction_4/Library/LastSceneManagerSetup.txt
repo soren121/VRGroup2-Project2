@@ -1,0 +1,4 @@
+sceneSetups:
+- path: Assets/vr_assets.unity
+  isLoaded: 1
+  isActive: 1
