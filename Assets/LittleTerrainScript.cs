@@ -57,6 +57,7 @@ public class LittleTerrainScript : MonoBehaviour
             //disable renderer on the taskObject container so that it can be used as a task boundary
             newTask.transform.GetComponent<Renderer>().enabled = false;
             newTask.GetComponent<Rigidbody>().useGravity = true;
+            newTask.GetComponent<Rigidbody>().isKinematic= false;
             collision.rigidbody.useGravity = false;
                 
         }

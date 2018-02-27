@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BigTerrainScript : MonoBehaviour {
+public class TaskObjectScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -23,10 +23,10 @@ public class BigTerrainScript : MonoBehaviour {
     // Determines what hit the floor, and then performs the appropriate action
     private IEnumerator handleCollision(Collision collision)
     {
-        if (collision.transform.name == "TaskObject(Clone)" && collision.rigidbody.isKinematic == false)
+        if (collision.transform.name == "BigRover")
         {
-            collision.rigidbody.isKinematic = true;
-            collision.rigidbody.useGravity = false;
+            collision.rigidbody.isKinematic = false;
+            collision.rigidbody.useGravity = true;
 
         }
         yield return null;
