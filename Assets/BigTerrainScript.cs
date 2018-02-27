@@ -13,4 +13,22 @@ public class BigTerrainScript : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        StartCoroutine(handleCollision(collision));
+    }
+
+
+    // Determines what hit the floor, and then performs the appropriate action
+    private IEnumerator handleCollision(Collision collision)
+    {
+        if (collision.transform.name == "TaskObject(Clone)" && collision.rigidbody.isKinematic == true)
+        {
+            collision.rigidbody.isKinematic = true;
+            collision.rigidbody.useGravity = false;
+
+        }
+        yield return null;
+    }
 }

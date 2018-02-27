@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LittleTerrainScript : MonoBehaviour
 {
-    public GameObject cube1;
+    public GameObject TaskObject;
     public GameObject BigTerrain;
     public GameObject BigCenter;
     public GameObject LittleTerrain;
@@ -24,28 +24,42 @@ public class LittleTerrainScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(BigTerrain.transform.name + " has position position " + BigTerrain.transform.position);
-        Debug.Log(BigCenter.transform.name + " has position position " + BigCenter.transform.position);
-        Debug.Log(LittleTerrain.transform.name + " has position position " + LittleTerrain.transform.position);
-        Debug.Log(LittleCenter.transform.name + " has position position " + LittleCenter.transform.position);
+        StartCoroutine(handleCollision(collision));   
+    }
 
 
-        Vector3 otherPos = collision.transform.position;
-        Debug.Log(collision.transform.name + "has position position " + collision.transform.name);
-        Vector3 differencePos = collision.transform.position - LittleCenter.transform.position;
-        differencePos.x += differencePos.x * 100;
-        differencePos.z += differencePos.z * 100;
-        Vector3 newPos = BigCenter.transform.position + differencePos;
+    // Determines what hit the floor, and then performs the appropriate action
+    private IEnumerator handleCollision(Collision collision)
+    {
+        if (collision.transform.name == "TaskObject" && collision.rigidbody.isKinematic == false)
+        {
+            //Make the TaskObject so that it won't bounce everywhere if you drop it on the terrain
+            collision.rigidbody.isKinematic = true;
+            yield return new WaitForSeconds(1);
 
-        //Debug.Log(collision.transform.name + " has position on " + otherTerrain + "terrain" + otherPos);
-        //float newy = 100 + otherPos.y;
-        //float newx = 10 * otherPos.x;
-        //float newz = 10 * otherPos.z;
-        //Vector3 newV = new Vector3(newx, newy, newz);
-        //Debug.Log(collision.transform.name + " has position on big terrain" + newV);
+            //get the TaskObject position
+            Vector3 otherPos = collision.transform.position;
+            Debug.Log(collision.transform.name + " has position position " + collision.transform.name);
 
-        GameObject newcube1 = GameObject.Instantiate(cube1);
-        newcube1.transform.localScale += new Vector3(10, 10, 10);
-        newcube1.transform.position += newPos;
+            //get the difference from the position of the taskObject and the little terrain center
+            Vector3 differencePos = collision.transform.position - LittleCenter.transform.position;
+
+            //scale the coordinates so they will be in the correct position on the big terrain
+            differencePos.x += differencePos.x * 100;
+            differencePos.z += differencePos.z * 100;
+            Vector3 newPos = BigCenter.transform.position + differencePos;
+
+            //create the taskObject in the correct location on the big terrain
+            GameObject newTask = GameObject.Instantiate(TaskObject);
+            newTask.transform.localScale += new Vector3(10, 10, 10);
+            newTask.transform.position += newPos;
+
+            //disable renderer on the taskObject container so that it can be used as a task boundary
+            newTask.transform.GetComponent<Renderer>().enabled = false;
+            newTask.GetComponent<Rigidbody>().useGravity = true;
+            collision.rigidbody.useGravity = false;
+                
+        }
+        yield return null;
     }
 }
