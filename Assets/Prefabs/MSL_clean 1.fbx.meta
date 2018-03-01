@@ -493,6 +493,101 @@ ModelImporter:
     4300184: suspension_steer_F_R
     4300186: wheel_01_R
     4300188: suspension_axel_R2
+    6400000: antenna_HG_01
+    6400002: antenna_HG_02_p
+    6400004: antenna_HG_03
+    6400006: antenna_LG
+    6400008: antenna_UHF
+    6400010: APXS
+    6400012: arm_01.001
+    6400014: arm_02.001
+    6400016: arm_03.001
+    6400018: arm_04.001
+    6400020: arm_05_head.001
+    6400022: bit_01.001
+    6400024: bit_02
+    6400026: bit_03
+    6400028: body
+    6400030: body.001
+    6400032: Chassis
+    6400034: ChemCam
+    6400036: CheMin
+    6400038: CHIMERA
+    6400040: cover_01
+    6400042: cover_02
+    6400044: cover_03
+    6400046: Cube_01_p
+    6400048: Cube_02_p
+    6400050: Cube_03_p
+    6400052: Cube_04_p
+    6400054: DAN_L
+    6400056: DAN_R
+    6400058: Drill
+    6400060: Dust Removal Tool
+    6400062: HazCam - front
+    6400064: HazCam - rear
+    6400066: HazCam_F
+    6400068: HazCam_rear_L
+    6400070: HazCam_rear_R
+    6400072: lens_covers_front
+    6400074: lens_covers_rear
+    6400076: MAHLI
+    6400078: MAHLI_cal_target
+    6400080: MAHLI_cam
+    6400082: MAHLI_LED_01
+    6400084: MAHLI_LED_02
+    6400086: MAHLI_LED_03
+    6400088: MAHLI_LED_04
+    6400090: MAHLI_lens_cover
+    6400092: MAHLI_lens_cover_p
+    6400094: MARDI
+    6400096: MARDI.001
+    6400098: mast_01.000
+    6400100: mast_01.001
+    6400102: mast_02.001
+    6400104: mast_03.001
+    6400106: mast_p
+    6400108: MastCam
+    6400110: MastCam_L
+    6400112: MastCam_R
+    6400114: //RootNode
+    6400116: NavCam
+    6400118: NavCam_top_L
+    6400120: NavCam_top_R
+    6400122: RAD
+    6400124: radiators
+    6400126: REMS
+    6400128: RTG
+    6400130: SAM
+    6400132: shadow_arm
+    6400134: sundial
+    6400136: suspension_arm_B2_L
+    6400138: suspension_arm_B2_R
+    6400140: suspension_arm_B_L
+    6400142: suspension_arm_B_L_p
+    6400144: suspension_arm_B_R
+    6400146: suspension_arm_B_R_p
+    6400148: suspension_arm_F_L
+    6400150: suspension_arm_F_L_p
+    6400152: suspension_arm_F_R
+    6400154: suspension_arm_F_R_p
+    6400156: suspension_axel_L
+    6400158: suspension_axel_L2
+    6400160: suspension_axel_R
+    6400162: suspension_axel_R2
+    6400164: suspension_rod_L
+    6400166: suspension_rod_R
+    6400168: suspension_steer_B_L
+    6400170: suspension_steer_B_R
+    6400172: suspension_steer_F_L
+    6400174: suspension_steer_F_R
+    6400176: suspension_xmember
+    6400178: wheel_01_L
+    6400180: wheel_01_R
+    6400182: wheel_02_L
+    6400184: wheel_02_R
+    6400186: wheel_03_L
+    6400188: wheel_03_R
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -580,7 +675,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1

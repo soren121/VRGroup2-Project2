@@ -17,6 +17,8 @@ public class VRPlayer : NetworkBehaviour {
 	public LocomotionMode locomotionMode = LocomotionMode.JOYSTICK_DRIVE;
 	public Vector3 lastHipPosition;
 	public bool isWalking;
+	public Rigidbody rover;
+	public float thrust;
 	// Use this for initialization
 	[SyncVar]
 	Vector3 headPos;
@@ -32,6 +34,7 @@ public class VRPlayer : NetworkBehaviour {
 	Quaternion rightHandRot;
 	void Start () {
 		head.transform.position = new Vector3(0, 2, 0);
+		rover = GameObject.Find("Rover").GetComponent<Rigidbody>();
 	}
 	
 	void Update () {
@@ -216,14 +219,12 @@ public class VRPlayer : NetworkBehaviour {
 	//called within an update method
 	public void vehicleDrive(Vector2 leftJoystick, Vector2 rightJoystick)
 	{
-
-		//we'll use the gaze in the x-z plane as the facing direction
-		Vector3 facingDirection = SteamVR_Rig.forward;
-		Vector3 rightDirection = SteamVR_Rig.right;
-		Vector3 displacement = (facingDirection * leftJoystick.y + rightDirection * leftJoystick.x) * Time.deltaTime;
-		SteamVR_Rig.transform.Translate(displacement, Space.World);
-		float angleDisplacement = 90 * rightJoystick.x * Time.deltaTime;
-		SteamVR_Rig.transform.Rotate(0, angleDisplacement, 0, Space.World);
+		Debug.Log("driving vehicle!");
+		Vector3 facingDirection = new Vector3(head.forward.x, 0, head.forward.z);
+		Vector3 rightDirection = new Vector3(head.right.x, 0, head.right.z);
+		Vector3 displacement = (facingDirection * leftJoystick.y + rightDirection*leftJoystick.x) * Time.deltaTime;
+		Debug.Log(displacement);
+		rover.AddRelativeForce(displacement * 10, ForceMode.Acceleration);
 
 	}
 
