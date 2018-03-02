@@ -46,7 +46,9 @@ public class LittleTerrainScript : MonoBehaviour
 
             //scale the coordinates so they will be in the correct position on the big terrain
             differencePos.x += differencePos.x * 100;
+            differencePos.y += differencePos.y * 100;
             differencePos.z += differencePos.z * 100;
+            //differencePos = differencePos * 100f;
             Vector3 newPos = BigCenter.transform.position + differencePos;
 
             //create the taskObject in the correct location on the big terrain
