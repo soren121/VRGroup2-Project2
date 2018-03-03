@@ -30,19 +30,16 @@ public class TaskObjectManager : MonoBehaviour {
             // loop through TaskObjects in scene and find the TaskObject with the given instanceID. 
             // this will be the TaskObject that called this method upon being completed.
             for(int i = 0; i < taskObjects.Length; i++) {
-                if(taskObjects[i].GetInstanceID() == id) {
+                if(taskObjects[i].gameObject.GetInstanceID() == id) {
                     // found TaskObject that called this method
                     TaskObject t = taskObjects[i];
                     // log task metadata
                     Debug.Log("spawnMoment: "+t.getSpawnMoment());
                     Debug.Log("roverEnterMoment: "+t.getRoverEnterMoment());
                     Debug.Log("completionMoment: "+t.getCompletionMoment());
-                    Debug.Log("travelingTime: "+t.getTravelingTime());
-                    Debug.Log("workingTime: "+t.getWorkingTime());
-                    Debug.Log("completionTime: "+t.getCompletionTime());
                     Debug.Log("numGoalObjects: "+t.getNumGoalObjects());
                     // destroy TaskObject
-                    GameObject.Destroy(t);
+                    GameObject.Destroy(t.gameObject);
                     break;
                 }
             }

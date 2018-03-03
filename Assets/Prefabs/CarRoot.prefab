@@ -379,6 +379,12 @@ MonoBehaviour:
   axleInfos: []
   maxMotorTorque: 100
   maxSteeringAngle: 40
+  cam: {fileID: 0}
+  rover: {fileID: 0}
+  lefthand: {fileID: 0}
+  lh: {fileID: 0}
+  righthand: {fileID: 0}
+  rh: {fileID: 0}
 --- !u!124 &124449581044940806
 Behaviour:
   m_ObjectHideFlags: 1
