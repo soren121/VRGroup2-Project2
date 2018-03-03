@@ -3,13 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VR;
 using UnityEngine.Networking;
+
+
+[System.Serializable]
+public class AxleInfo {
+	public WheelCollider leftWheel;
+	public WheelCollider rightWheel;
+	public bool motor;
+	public bool steering;
+
+}
+
+
 public class VRPlayer : NetworkBehaviour {
 	//public Blinker hmdBlinker;
+	public List<AxleInfo> axleInfos; 
+	public float maxMotorTorque;
+	public float maxSteeringAngle;
+
+
+
+
 	public Transform SteamVR_Rig;
 	public SteamVR_TrackedObject hmd;
 	public SteamVR_TrackedObject controllerLeft;
 	public SteamVR_TrackedObject controllerRight;
 	public Transform head;
+	public Transform cam;
 	public HandController handLeft;
 	public HandController handRight;
 	public Transform feet;
@@ -34,14 +54,49 @@ public class VRPlayer : NetworkBehaviour {
 	Quaternion rightHandRot;
 	void Start () {
 		head.transform.position = new Vector3(0, 2, 0);
-		rover = GameObject.Find("Rover").GetComponent<Rigidbody>();
+		rover = GameObject.Find("BigRover").GetComponent<Rigidbody>();
 	}
 	
 	void Update () {
 	
 	}
+	public void ApplyLocalPositionToVisuals(WheelCollider collider)
+	{
+		if (collider.transform.childCount == 0) {
+			return;
+		}
+
+		Transform visualWheel = collider.transform.GetChild(0);
+
+		Vector3 position;
+		Quaternion rotation;
+		collider.GetWorldPose(out position, out rotation);
+
+		visualWheel.transform.position = position;
+		visualWheel.transform.rotation = rotation;
+	}
 	private void FixedUpdate()
 	{
+		cam.position = rover.position;
+		Debug.Log(Input.GetJoystickNames());
+		//float motor = maxMotorTorque * Input.GetAxis("Vertical");
+		//float steering = maxSteeringAngle * Input.GetAxis("Horizontal");
+		float motor = maxMotorTorque * getJoystick(controllerLeft).y;
+		float steering = maxSteeringAngle * getJoystick(controllerRight).x;
+
+		foreach (AxleInfo axleInfo in axleInfos) {
+			if (axleInfo.steering) {
+				axleInfo.leftWheel.steerAngle = steering;
+				axleInfo.rightWheel.steerAngle = steering;
+			}
+			if (axleInfo.motor) {
+				axleInfo.leftWheel.motorTorque = motor;
+				axleInfo.rightWheel.motorTorque = motor;
+			}
+			ApplyLocalPositionToVisuals(axleInfo.leftWheel);
+			ApplyLocalPositionToVisuals(axleInfo.rightWheel);
+		}
+
 		if (isLocalPlayer)
 		{
 			if (UnityEngine.XR.XRSettings.enabled)
@@ -205,15 +260,27 @@ public class VRPlayer : NetworkBehaviour {
 	//called within an update method
 	public void drive(Vector2 leftJoystick, Vector2 rightJoystick)
 	{
+		Debug.Log("Driving!");
+		float motor = Input.GetAxis("Vertical");
+		float steer = Input.GetAxis("Horizontal");
+		//float motor = leftJoystick.y;
+		//float steer = rightJoystick.x;
+		Debug.Log("motor = " + motor);
+		Debug.Log("steer = " + steer);
 
+		
+		Vector3 displacement = (motor*Vector3.forward) * Time.deltaTime;
+		rover.transform.Translate(displacement, Space.World);
+		rover.transform.Rotate(new Vector3(0, steer, 0));
+		
 		//we'll use the gaze in the x-z plane as the facing direction
-		Vector3 facingDirection = new Vector3(head.forward.x, 0, head.forward.z);
+		/*Vector3 facingDirection = new Vector3(head.forward.x, 0, head.forward.z);
 		Vector3 rightDirection = new Vector3(head.right.x, 0, head.right.z);
 		Vector3 displacement = (facingDirection * leftJoystick.y + rightDirection*leftJoystick.x) * Time.deltaTime;
 		SteamVR_Rig.transform.Translate(displacement, Space.World);
 		float angleDisplacement = 90*rightJoystick.x * Time.deltaTime;
 		SteamVR_Rig.transform.Rotate(0, angleDisplacement, 0, Space.World);
-
+*/
 	}
 
 	//called within an update method
