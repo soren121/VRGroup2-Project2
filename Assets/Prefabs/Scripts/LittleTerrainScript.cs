@@ -9,6 +9,7 @@ public class LittleTerrainScript : MonoBehaviour
     public GameObject BigCenter;
     public GameObject LittleTerrain;
     public GameObject LittleCenter;
+    public GameObject CheckPoint;
 
     // Use this for initialization
     void Start()
@@ -31,7 +32,11 @@ public class LittleTerrainScript : MonoBehaviour
     // Determines what hit the floor, and then performs the appropriate action
     private IEnumerator handleCollision(Collision collision)
     {
-        if (collision.transform.name == "TaskObject" && collision.rigidbody.isKinematic == false)
+        if ((collision.transform.name == "TaskObject" && collision.rigidbody.isKinematic == false) || 
+            (collision.transform.name == "TaskObject (1)" && collision.rigidbody.isKinematic == false) ||
+            (collision.transform.name == "TaskObject (2)" && collision.rigidbody.isKinematic == false) ||
+            (collision.transform.name == "TaskObject (3)" && collision.rigidbody.isKinematic == false)
+            )
         {
             //Make the TaskObject so that it won't bounce everywhere if you drop it on the terrain
             collision.rigidbody.isKinematic = true;
@@ -55,6 +60,10 @@ public class LittleTerrainScript : MonoBehaviour
             GameObject newTask = GameObject.Instantiate(TaskObject);
             newTask.transform.localScale += new Vector3(10, 10, 10);
             newTask.transform.position += newPos;
+
+            //create checkpoint
+            GameObject newCheckPoint = GameObject.Instantiate(CheckPoint);
+            newCheckPoint.transform.position += newPos;
 
             //disable renderer on the taskObject container so that it can be used as a task boundary
             newTask.transform.GetComponent<Renderer>().enabled = false;

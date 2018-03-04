@@ -25,8 +25,8 @@ public class BigTerrainScript : MonoBehaviour {
     {
         if (collision.transform.name == "TaskObject(Clone)" && collision.rigidbody.isKinematic == false)
         {
-            collision.rigidbody.isKinematic = true;
-            collision.rigidbody.useGravity = false;
+            collision.rigidbody.isKinematic = false;
+            collision.rigidbody.useGravity = true;
 
         }
         yield return null;
