@@ -5,7 +5,9 @@ using UnityEngine.VR;
 public class GameManager: MonoBehaviour {
 
 	public GameObject vrCameraRig;
+    public GameObject vrCameraRigControlCenter;
 	public GameObject nonVRCameraRig;
+    public bool rovercameraset;
 	//public Blinker hmdBlinker;
 	public SteamVR_TrackedObject hmd;
 	public SteamVR_TrackedObject controllerLeft;
@@ -14,7 +16,10 @@ public class GameManager: MonoBehaviour {
 	void Start () {
 		
 	}
-	
+	public void enableRover()
+    {
+        rovercameraset = true;
+    }
 	// Update is called once per frame
 	void Update () {
 		
@@ -34,7 +39,17 @@ public class GameManager: MonoBehaviour {
 			yield return null;
 		}
 		UnityEngine.XR.XRSettings.enabled = true;
-		vrCameraRig.SetActive(true);
-		nonVRCameraRig.SetActive(false);
+
+        if (rovercameraset)
+        {
+            vrCameraRigControlCenter.SetActive(false);
+            vrCameraRig.SetActive(true);
+        }
+        else
+        {
+            vrCameraRigControlCenter.SetActive(true);
+            vrCameraRig.SetActive(false);
+        }
+        nonVRCameraRig.SetActive(false);
 	}
 }

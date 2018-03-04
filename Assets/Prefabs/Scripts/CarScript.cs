@@ -49,7 +49,7 @@ public class CarScript : MonoBehaviour {
 	public void FixedUpdate()
 	{
         cam.position = rover.position;// + 3*Vector3.down + Vector3.back;
-		Debug.Log(Input.GetJoystickNames());
+		//Debug.Log(Input.GetJoystickNames());
 		float motor = maxMotorTorque * Input.GetAxis("Vertical");
 		float steering = maxSteeringAngle * Input.GetAxis("Horizontal");
 		//float motor = maxMotorTorque * getJoystick(lh).y;

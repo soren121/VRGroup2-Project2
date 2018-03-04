@@ -64,6 +64,7 @@ public class LittleTerrainScript : MonoBehaviour
             //create checkpoint
             GameObject newCheckPoint = GameObject.Instantiate(CheckPoint);
             newCheckPoint.transform.position += newPos;
+            newCheckPoint.transform.parent = newTask.transform;
 
             //disable renderer on the taskObject container so that it can be used as a task boundary
             newTask.transform.GetComponent<Renderer>().enabled = false;

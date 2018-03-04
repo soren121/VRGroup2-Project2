@@ -42,7 +42,7 @@ public class VRPlayer : NetworkBehaviour {
 	[SyncVar]
 	Quaternion rightHandRot;
 	void Start () {
-		head.transform.position = new Vector3(0, 2, 0);
+		head.transform.position = new Vector3(0, 4, 0);
 		rover = GameObject.Find("BigRover").transform;
         
 	}
@@ -68,7 +68,7 @@ public class VRPlayer : NetworkBehaviour {
 	private void FixedUpdate()
 	{
 		//cam.position = rover.position;
-		Debug.Log(Input.GetJoystickNames());
+		//Debug.Log(Input.GetJoystickNames());
 		//float motor = maxMotorTorque * Input.GetAxis("Vertical");
 		//float steering = maxSteeringAngle * Input.GetAxis("Horizontal");
 		
@@ -238,13 +238,13 @@ public class VRPlayer : NetworkBehaviour {
 	//called within an update method
 	public void drive(Vector2 leftJoystick, Vector2 rightJoystick)
 	{
-		Debug.Log("Driving!");
+		//Debug.Log("Driving!");
 		float motor = Input.GetAxis("Vertical");
 		float steer = Input.GetAxis("Horizontal");
 		//float motor = leftJoystick.y;
 		//float steer = rightJoystick.x;
-		Debug.Log("motor = " + motor);
-		Debug.Log("steer = " + steer);
+		//Debug.Log("motor = " + motor);
+		//Debug.Log("steer = " + steer);
 
 		
 		Vector3 displacement = (motor*Vector3.forward) * Time.deltaTime;
@@ -264,11 +264,11 @@ public class VRPlayer : NetworkBehaviour {
 	//called within an update method
 	public void vehicleDrive(Vector2 leftJoystick, Vector2 rightJoystick)
 	{
-		Debug.Log("driving vehicle!");
+		//Debug.Log("driving vehicle!");
 		Vector3 facingDirection = new Vector3(head.forward.x, 0, head.forward.z);
 		Vector3 rightDirection = new Vector3(head.right.x, 0, head.right.z);
 		Vector3 displacement = (facingDirection * leftJoystick.y + rightDirection*leftJoystick.x) * Time.deltaTime;
-		Debug.Log(displacement);
+		//Debug.Log(displacement);
 		//rover.AddRelativeForce(displacement * 10, ForceMode.Acceleration);
 
 	}
