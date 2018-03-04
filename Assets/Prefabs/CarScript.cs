@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-/* 
+
 [System.Serializable]
 public class AxleInfo {
 	public WheelCollider leftWheel;
@@ -11,7 +11,7 @@ public class AxleInfo {
 	public bool steering;
 
 }
-*/
+
 public class CarScript : MonoBehaviour {
 	public List<AxleInfo> axleInfos; 
 	public float maxMotorTorque;
@@ -48,7 +48,7 @@ public class CarScript : MonoBehaviour {
 
 	public void FixedUpdate()
 	{
-		cam.position = rover.position;
+        cam.position = rover.position;// + 3*Vector3.down + Vector3.back;
 		Debug.Log(Input.GetJoystickNames());
 		float motor = maxMotorTorque * Input.GetAxis("Vertical");
 		float steering = maxSteeringAngle * Input.GetAxis("Horizontal");

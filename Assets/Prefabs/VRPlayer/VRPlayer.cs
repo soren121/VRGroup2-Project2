@@ -5,21 +5,10 @@ using UnityEngine.VR;
 using UnityEngine.Networking;
 
 
-[System.Serializable]
-public class AxleInfo {
-	public WheelCollider leftWheel;
-	public WheelCollider rightWheel;
-	public bool motor;
-	public bool steering;
-
-}
 
 
 public class VRPlayer : NetworkBehaviour {
 	//public Blinker hmdBlinker;
-	public List<AxleInfo> axleInfos; 
-	public float maxMotorTorque;
-	public float maxSteeringAngle;
 
 
 
@@ -29,7 +18,7 @@ public class VRPlayer : NetworkBehaviour {
 	public SteamVR_TrackedObject controllerLeft;
 	public SteamVR_TrackedObject controllerRight;
 	public Transform head;
-	public Transform cam;
+	//public Transform cam;
 	public HandController handLeft;
 	public HandController handRight;
 	public Transform feet;
@@ -37,7 +26,7 @@ public class VRPlayer : NetworkBehaviour {
 	public LocomotionMode locomotionMode = LocomotionMode.JOYSTICK_DRIVE;
 	public Vector3 lastHipPosition;
 	public bool isWalking;
-	public Rigidbody rover;
+	public Transform rover;
 	public float thrust;
 	// Use this for initialization
 	[SyncVar]
@@ -54,7 +43,8 @@ public class VRPlayer : NetworkBehaviour {
 	Quaternion rightHandRot;
 	void Start () {
 		head.transform.position = new Vector3(0, 2, 0);
-		rover = GameObject.Find("BigRover").GetComponent<Rigidbody>();
+		rover = GameObject.Find("BigRover").transform;
+        
 	}
 	
 	void Update () {
@@ -77,25 +67,13 @@ public class VRPlayer : NetworkBehaviour {
 	}
 	private void FixedUpdate()
 	{
-		cam.position = rover.position;
+		//cam.position = rover.position;
 		Debug.Log(Input.GetJoystickNames());
 		//float motor = maxMotorTorque * Input.GetAxis("Vertical");
 		//float steering = maxSteeringAngle * Input.GetAxis("Horizontal");
-		float motor = maxMotorTorque * getJoystick(controllerLeft).y;
-		float steering = maxSteeringAngle * getJoystick(controllerRight).x;
+		
 
-		foreach (AxleInfo axleInfo in axleInfos) {
-			if (axleInfo.steering) {
-				axleInfo.leftWheel.steerAngle = steering;
-				axleInfo.rightWheel.steerAngle = steering;
-			}
-			if (axleInfo.motor) {
-				axleInfo.leftWheel.motorTorque = motor;
-				axleInfo.rightWheel.motorTorque = motor;
-			}
-			ApplyLocalPositionToVisuals(axleInfo.leftWheel);
-			ApplyLocalPositionToVisuals(axleInfo.rightWheel);
-		}
+		
 
 		if (isLocalPlayer)
 		{
@@ -291,7 +269,7 @@ public class VRPlayer : NetworkBehaviour {
 		Vector3 rightDirection = new Vector3(head.right.x, 0, head.right.z);
 		Vector3 displacement = (facingDirection * leftJoystick.y + rightDirection*leftJoystick.x) * Time.deltaTime;
 		Debug.Log(displacement);
-		rover.AddRelativeForce(displacement * 10, ForceMode.Acceleration);
+		//rover.AddRelativeForce(displacement * 10, ForceMode.Acceleration);
 
 	}
 
