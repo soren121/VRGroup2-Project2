@@ -14,7 +14,6 @@ public class LittleRoverScript : NetworkBehaviour {
 		
 	}
 
-	[ClientRpc]
 	public void UpdateFromBigRover(Vector3 roverPos, Quaternion roverRot)
 	{
 		Vector3 differencePos = roverPos - BigCenter.transform.position;
