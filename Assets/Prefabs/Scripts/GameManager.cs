@@ -24,11 +24,9 @@ public class GameManager: NetworkBehaviour {
     {
         roverCameraSet = true;
 
-		if (!isServer) {
-			NetworkInstanceId roverId = rover.GetComponent<CarScript> ().netId;
-			GameObject player = GameObject.FindGameObjectWithTag ("Player");
-			player.GetComponent<VRPlayer> ().CmdAssignAuthority (roverId);
-		}
+		NetworkInstanceId roverId = rover.GetComponent<CarScript> ().netId;
+		GameObject player = GameObject.FindGameObjectWithTag ("Player");
+		player.GetComponent<VRPlayer> ().CmdAssignAuthority (roverId);
     }
 	// Update is called once per frame
 	void Update () {
