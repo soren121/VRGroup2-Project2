@@ -633,8 +633,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce63931b27761b6449f013a0f7881240, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  snapThreshold: 0.05
-  snapThresholdRot: 2
+  snapThreshold: 3
+  snapThresholdRot: 3
 --- !u!1 &786242648
 GameObject:
   m_ObjectHideFlags: 0
@@ -1426,7 +1426,8 @@ MonoBehaviour:
   vrCameraRig: {fileID: 1858306360}
   vrCameraRigControlCenter: {fileID: 1848900560}
   nonVRCameraRig: {fileID: 919630901}
-  rovercameraset: 0
+  rover: {fileID: 735114931}
+  roverCameraSet: 0
   hmd: {fileID: 1204348531}
   controllerLeft: {fileID: 1750902116}
   controllerRight: {fileID: 1669333522}

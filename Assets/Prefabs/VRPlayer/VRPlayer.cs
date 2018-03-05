@@ -130,6 +130,14 @@ public class VRPlayer : NetworkBehaviour {
 		}
 
 	}
+
+	[Command]
+	public void CmdAssignAuthority(NetworkInstanceId roverId)
+	{
+		var rover = NetworkServer.FindLocalObject (roverId);
+		rover.GetComponent<NetworkIdentity>().AssignClientAuthority (connectionToClient);
+	}
+
 	[Command]
 	void CmdSyncPlayer(Vector3 pos, Quaternion rot, Vector3 lhpos, Quaternion lhrot, Vector3 rhpos, Quaternion rhrot, Vector3 roverpos, Quaternion roverrot)
 	{

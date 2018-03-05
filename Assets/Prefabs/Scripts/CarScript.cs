@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
+using UnityEngine.Networking;
 
 [System.Serializable]
 public class AxleInfo {
@@ -12,7 +12,7 @@ public class AxleInfo {
 
 }
 
-public class CarScript : MonoBehaviour {
+public class CarScript : NetworkBehaviour {
 	public List<AxleInfo> axleInfos; 
 	public float maxMotorTorque;
 	public float maxSteeringAngle;

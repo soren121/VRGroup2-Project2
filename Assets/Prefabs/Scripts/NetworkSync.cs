@@ -60,7 +60,7 @@ public class NetworkSync : NetworkBehaviour
             {
                 rb.rotation = Quaternion.Slerp(rb.rotation, networkRot, .1f);
             }
-		CmdUpdate (rb.position, rb.velocity, rb.rotation, rb.angularVelocity);
+		//CmdUpdate (rb.position, rb.velocity, rb.rotation, rb.angularVelocity);
       }
 
     }
