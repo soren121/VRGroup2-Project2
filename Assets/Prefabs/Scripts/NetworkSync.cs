@@ -30,7 +30,7 @@ public class NetworkSync : NetworkBehaviour
 
     public override float GetNetworkSendInterval()
     {
-        return .01f;
+        return .1f;
     }
 
     // Update is called once per frame

@@ -17,16 +17,11 @@ public class LittleRoverScript : NetworkBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        CmdMoveLittleRover();
-    }
-
-    [Command]
-    public void CmdMoveLittleRover()
-    {
         Vector3 differencePos = BigRover.transform.position - BigCenter.transform.position;
         differencePos = differencePos * .1f;
         LittleRover.transform.rotation = BigRover.transform.rotation;
         differencePos = differencePos * .1f;
         LittleRover.transform.position = LittleCenter.transform.position + differencePos;
     }
+    
 }
