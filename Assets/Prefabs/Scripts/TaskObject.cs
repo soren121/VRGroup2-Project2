@@ -27,7 +27,7 @@ public class TaskObject : MonoBehaviour {
         // check if rover entered for the first time
         if(other.gameObject.transform.name == "BigRover" && roverEnterMoment == DateTime.MinValue) {
             roverEnterMoment = DateTime.UtcNow;
-            Destroy(GameObject.Find("CheckPoint(Clone"));
+            Destroy(GameObject.Find("CheckPoint 1(Clone)"));
         }
     }
 
