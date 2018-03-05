@@ -6,20 +6,17 @@ using System.Diagnostics;
 
 public class TaskObject : MonoBehaviour {
 
-    private int numGoalObjects;
+    private GoalObject[] goalObjects;
     private DateTime spawnMoment;
     private DateTime roverEnterMoment;
     private DateTime completionMoment;
     private TaskObjectManager taskManager;
 
-    public bool isCompleted;
-
 	// Use this for initialization
 	void Start () {
-        numGoalObjects = transform.childCount;
+        goalObjects = transform.GetComponentsInChildren<GoalObject>();
         spawnMoment = DateTime.UtcNow;
         taskManager = GameObject.FindObjectOfType<TaskObjectManager>();
-        StartCoroutine(checkTaskCompleted());
 	}
 
     // something entered the task space
@@ -27,14 +24,55 @@ public class TaskObject : MonoBehaviour {
         // check if rover entered for the first time
         if(other.gameObject.transform.name == "BigRover" && roverEnterMoment == DateTime.MinValue) {
             roverEnterMoment = DateTime.UtcNow;
-            Destroy(GameObject.Find("CheckPoint 1(Clone)"));
+            // let goal objects all roll away
+            for(int i = 0; i < goalObjects.Length; i++) {
+                goalObjects[i].gameObject.GetComponent<Rigidbody>().isKinematic = false;
+            }
+            // now start checking (after 5sec delay) if task completed
+            StartCoroutine(checkTaskCompleted());
+        }
+    }
+
+    void OnTriggerStay(Collider other){
+        GoalObject go = other.gameObject.GetComponent<GoalObject>();
+        if(go != null){
+            // find it in original set of GoalObjects and set that it's inside task space
+            for(int i = 0; i < goalObjects.Length; i++) {
+                if(goalObjects[i].gameObject.GetInstanceID() == go.gameObject.GetInstanceID()) {
+                    go.setInsideTaskSpace(true);
+                }
+            }
+        }
+    }
+ 
+    void OnTriggerExit(Collider other){
+        GoalObject go = other.gameObject.GetComponent<GoalObject>();
+        if(go != null){
+            // find it in original set of GoalObjects and set that it's not inside task space
+            for(int i = 0; i < goalObjects.Length; i++) {
+                if(goalObjects[i].gameObject.GetInstanceID() == go.gameObject.GetInstanceID()) {
+                    go.setInsideTaskSpace(false);
+                }
+            }
         }
     }
 
     // constantly checks if this task has met completion condition
     private IEnumerator checkTaskCompleted() {
-        // busy wait
-        while(!isCompleted) yield return null;
+        // give objects enough time to roll away (outside of task space)
+        yield return new WaitForSeconds(5);
+        // constantly check if all objects are back in task space (rover brought them all back)
+        while(true) {
+            bool allGoalObjectsInTaskSpace = true;
+            for(int i = 0; i < goalObjects.Length; i++) {
+                if(!goalObjects[i].getInsideTaskSpace()) {
+                    allGoalObjectsInTaskSpace = false;
+                    break;
+                }
+            }
+            if(allGoalObjectsInTaskSpace) break;
+            else yield return null;
+        }
         // task has been completed
         onTaskCompleted();
     }
@@ -60,7 +98,7 @@ public class TaskObject : MonoBehaviour {
     }
 
     public int getNumGoalObjects() {
-        return this.numGoalObjects;
+        return this.goalObjects.Length;
     }
 
 }
