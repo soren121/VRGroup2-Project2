@@ -26,7 +26,7 @@ public class TaskObject : MonoBehaviour {
             roverEnterMoment = DateTime.UtcNow;
             // let goal objects all roll away
             for(int i = 0; i < goalObjects.Length; i++) {
-                goalObjects[i].gameObject.GetComponent<Rigidbody>().isKinematic = false;
+                goalObjects[i].gameObject.AddComponent<Rigidbody>().isKinematic = false;
             }
             // now start checking (after 5sec delay) if task completed
             StartCoroutine(checkTaskCompleted());
