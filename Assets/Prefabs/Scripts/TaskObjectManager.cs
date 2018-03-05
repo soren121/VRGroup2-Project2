@@ -2,25 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using SimpleJSON;
 
 public class TaskObjectManager : MonoBehaviour {
 
-    // public int numTasksToSpawn;
-    // GameObject[] tasks;
-    // TaskObject taskPrefab;
+    private JSONNode data;
 
 	// Use this for initialization
 	void Start () {
-        // tasks = new GameObject[numTasksToSpawn];
-        // for(int i = 0; i < numTasksToSpawn; i++) { 
-        //     // instantiate each TaskObject in same position as parent, but 2 units up so it falls
-        //     TaskObject task = GameObject.Instantiate(
-        //                                 taskPrefab, // prefab
-        //                                 this.transform.localPosition+Vector3.up*2, // pos
-        //                                 Quaternion.AngleAxis(0, Vector3.up),  // rot
-        //                                 this.transform // parent
-        //                             ) as TaskObject;
-        // }
+        // add root session object
+        data = new JSONObject();
+        data.Add("session", new JSONObject());
+        // initialize session object
+        data["session"].AsObject.Add("start", new JSONString(DateTime.UtcNow.ToString()));
+        data["session"].AsObject.Add("tasks", new JSONArray());
 	}
 
     // called by TaskObjects when they are completed
@@ -33,7 +28,15 @@ public class TaskObjectManager : MonoBehaviour {
                 if(taskObjects[i].gameObject.GetInstanceID() == id) {
                     // found TaskObject that called this method
                     TaskObject t = taskObjects[i];
-                    // log task metadata
+                    // create json representation of task data for logging
+                    JSONObject task = new JSONObject();
+                    task.Add("spawnMoment", new JSONString(t.getSpawnMoment().ToString()));
+                    task.Add("roverEnterMoment", new JSONString(t.getRoverEnterMoment().ToString()));
+                    task.Add("completionMoment", new JSONString(t.getCompletionMoment().ToString()));
+                    task.Add("numGoalObjects", new JSONNumber(t.getNumGoalObjects()));
+                    // add task to session["tasks"] array
+                    data["session"]["tasks"].AsArray.Add(task);
+                    // debug log the task data
                     Debug.Log("spawnMoment: "+t.getSpawnMoment());
                     Debug.Log("roverEnterMoment: "+t.getRoverEnterMoment());
                     Debug.Log("completionMoment: "+t.getCompletionMoment());
@@ -44,6 +47,14 @@ public class TaskObjectManager : MonoBehaviour {
                 }
             }
         }
+    }
+
+    // called when either a) the user unclicks the play button in the editor, or
+    // b) the user in the command center clicks the 'end session' button
+    void OnApplicationQuit() {
+        // set session end time
+        data["session"].AsObject.Add("end", new JSONString(DateTime.UtcNow.ToString()));
+        // log this in player prefs
     }
 	
 	// Update is called once per frame
