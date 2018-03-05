@@ -23,8 +23,6 @@ public class GameManager: NetworkBehaviour {
 	public void enableRover()
     {
         roverCameraSet = true;
-		rover.GetComponent<CarScript> ().GrabAuthority ();
-		Debug.Log (rover.GetComponent<NetworkIdentity> ().hasAuthority);
     }
 	// Update is called once per frame
 	void Update () {

@@ -27,6 +27,7 @@ public class VRPlayer : NetworkBehaviour {
 	public Vector3 lastHipPosition;
 	public bool isWalking;
 	public Transform rover;
+	public GameObject littleRover;
     
 	public float thrust;
 	// Use this for initialization
@@ -50,7 +51,7 @@ public class VRPlayer : NetworkBehaviour {
 	void Start () {
 		head.transform.position = new Vector3(0, 4, 0);
 		rover = GameObject.Find("BigRover").transform;
-        
+		littleRover = GameObject.Find ("littleRover");
 	}
 	
 	void Update () {
@@ -78,8 +79,9 @@ public class VRPlayer : NetworkBehaviour {
 		//float motor = maxMotorTorque * Input.GetAxis("Vertical");
 		//float steering = maxSteeringAngle * Input.GetAxis("Horizontal");
 		
-
-		
+		if (isServer) {
+			littleRover.GetComponent<LittleRoverScript> ().UpdateFromBigRover (rover);
+		}
 
 		if (isLocalPlayer)
 		{
@@ -129,17 +131,6 @@ public class VRPlayer : NetworkBehaviour {
 
 		}
 
-	}
-
-	[Command]
-	public void CmdAssignAuthority(NetworkInstanceId roverId)
-	{
-		var serverRover = NetworkServer.FindLocalObject (roverId);
-		var roverIdentity = serverRover.GetComponent<NetworkIdentity>();
-
-		if (roverIdentity.clientAuthorityOwner != this.connectionToClient) {
-			Debug.Log("Identity set: " + roverIdentity.AssignClientAuthority (connectionToClient));
-		}
 	}
 
 	[Command]

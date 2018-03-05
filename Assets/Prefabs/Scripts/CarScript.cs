@@ -46,13 +46,6 @@ public class CarScript : NetworkBehaviour {
 		visualWheel.transform.rotation = rotation;
 	}
 
-	public void GrabAuthority()
-	{
-		NetworkInstanceId roverId = this.netId;
-		GameObject player = GameObject.FindGameObjectWithTag ("Player");
-		player.GetComponent<VRPlayer>().CmdAssignAuthority (roverId);
-	}
-
 	public void FixedUpdate()
 	{
 		NetworkInstanceId roverId = this.netId;
