@@ -46,12 +46,27 @@ public class CarScript : NetworkBehaviour {
 		visualWheel.transform.rotation = rotation;
 	}
 
+	public void GrabAuthority()
+	{
+		NetworkInstanceId roverId = this.netId;
+		GameObject player = GameObject.FindGameObjectWithTag ("Player");
+		player.GetComponent<VRPlayer>().CmdAssignAuthority (roverId);
+	}
+
 	public void FixedUpdate()
 	{
-        cam.position = rover.position;// + 3*Vector3.down + Vector3.back;
+		NetworkInstanceId roverId = this.netId;
+		CmdLocomotion (roverId);
+	}
+
+	[Command]
+	public void CmdLocomotion(NetworkInstanceId roverId)
+	{
+		var remoteRover = NetworkServer.FindLocalObject (roverId).transform;
+		cam.position = remoteRover.position;// + 3*Vector3.down + Vector3.back;
 		//Debug.Log(Input.GetJoystickNames());
-		float motor = maxMotorTorque * Input.GetAxis("Vertical");
-		float steering = maxSteeringAngle * Input.GetAxis("Horizontal");
+		float motor = maxMotorTorque * Input.GetAxis ("Vertical");
+		float steering = maxSteeringAngle * Input.GetAxis ("Horizontal");
 		//float motor = maxMotorTorque * getJoystick(lh).y;
 		//float steering = maxSteeringAngle * getJoystick(rh).x;
 
@@ -64,8 +79,8 @@ public class CarScript : NetworkBehaviour {
 				axleInfo.leftWheel.motorTorque = motor;
 				axleInfo.rightWheel.motorTorque = motor;
 			}
-			ApplyLocalPositionToVisuals(axleInfo.leftWheel);
-			ApplyLocalPositionToVisuals(axleInfo.rightWheel);
+			ApplyLocalPositionToVisuals (axleInfo.leftWheel);
+			ApplyLocalPositionToVisuals (axleInfo.rightWheel);
 		}
 	}
 }

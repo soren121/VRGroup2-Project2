@@ -132,14 +132,13 @@ public class VRPlayer : NetworkBehaviour {
 	}
 
 	[Command]
-	public void CmdAssignAuthority()
+	public void CmdAssignAuthority(NetworkInstanceId roverId)
 	{
-		NetworkInstanceId roverId = rover.GetComponent<CarScript>().netId;
 		var serverRover = NetworkServer.FindLocalObject (roverId);
 		var roverIdentity = serverRover.GetComponent<NetworkIdentity>();
 
 		if (roverIdentity.clientAuthorityOwner != this.connectionToClient) {
-			roverIdentity.AssignClientAuthority (connectionToClient);
+			Debug.Log("Identity set: " + roverIdentity.AssignClientAuthority (connectionToClient));
 		}
 	}
 
