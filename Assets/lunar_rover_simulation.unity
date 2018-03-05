@@ -633,7 +633,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce63931b27761b6449f013a0f7881240, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  snapThreshold: 0.5
+  snapThreshold: 0.05
   snapThresholdRot: 2
 --- !u!1 &786242648
 GameObject:

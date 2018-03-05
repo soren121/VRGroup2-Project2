@@ -37,12 +37,12 @@ public class NetworkSync : NetworkBehaviour
     void FixedUpdate()
     {
 
-      //  if (hasAuthority)
-      //  {
-      //      CmdUpdate(rb.position, rb.velocity, rb.rotation, rb.angularVelocity);
-      //  }
-      //  else
-      //  {
+      if (hasAuthority)
+      {
+          CmdUpdate(rb.position, rb.velocity, rb.rotation, rb.angularVelocity);
+      }
+      else
+      {
 
             rb.velocity = Vector3.Lerp(rb.velocity, networkVel, .1f);
             Vector3 offset = rb.position - networkPos;
@@ -61,8 +61,7 @@ public class NetworkSync : NetworkBehaviour
                 rb.rotation = Quaternion.Slerp(rb.rotation, networkRot, .1f);
             }
 		CmdUpdate (rb.position, rb.velocity, rb.rotation, rb.angularVelocity);
-
-        //}
+      }
 
     }
     [Command]
