@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class LittleRoverScript : MonoBehaviour {
+public class LittleRoverScript : NetworkBehaviour {
 
     public GameObject BigRover;
     public GameObject BigCenter;
@@ -16,14 +17,11 @@ public class LittleRoverScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        
         Vector3 differencePos = BigRover.transform.position - BigCenter.transform.position;
-        differencePos= differencePos * .1f;
+        differencePos = differencePos * .1f;
         LittleRover.transform.rotation = BigRover.transform.rotation;
         differencePos = differencePos * .1f;
         LittleRover.transform.position = LittleCenter.transform.position + differencePos;
-        
-
     }
-
+    
 }

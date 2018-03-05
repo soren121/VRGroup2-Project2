@@ -27,6 +27,7 @@ public class VRPlayer : NetworkBehaviour {
 	public Vector3 lastHipPosition;
 	public bool isWalking;
 	public Transform rover;
+    
 	public float thrust;
 	// Use this for initialization
 	[SyncVar]
@@ -41,6 +42,11 @@ public class VRPlayer : NetworkBehaviour {
 	Vector3 rightHandPos;
 	[SyncVar]
 	Quaternion rightHandRot;
+    [SyncVar]
+    Vector3 roverPos;
+    [SyncVar]
+    Quaternion roverRot;
+
 	void Start () {
 		head.transform.position = new Vector3(0, 4, 0);
 		rover = GameObject.Find("BigRover").transform;
@@ -109,7 +115,7 @@ public class VRPlayer : NetworkBehaviour {
 
 
 			}
-			CmdSyncPlayer(head.transform.position,head.transform.rotation, handLeft.transform.position, handLeft.transform.rotation, handRight.transform.position, handRight.transform.rotation);
+			CmdSyncPlayer(head.transform.position,head.transform.rotation, handLeft.transform.position, handLeft.transform.rotation, handRight.transform.position, handRight.transform.rotation, rover.position, rover.rotation);
 		}else
 		{
 			//runs on all other clients and  the server
@@ -125,8 +131,10 @@ public class VRPlayer : NetworkBehaviour {
 
 	}
 	[Command]
-	void CmdSyncPlayer(Vector3 pos, Quaternion rot, Vector3 lhpos, Quaternion lhrot, Vector3 rhpos, Quaternion rhrot )
+	void CmdSyncPlayer(Vector3 pos, Quaternion rot, Vector3 lhpos, Quaternion lhrot, Vector3 rhpos, Quaternion rhrot, Vector3 roverpos, Quaternion roverrot)
 	{
+        rover.transform.position = roverpos;
+        rover.rotation = roverrot;
 		head.transform.position = pos;
 		head.transform.rotation = rot;
 		handLeft.transform.position = lhpos;

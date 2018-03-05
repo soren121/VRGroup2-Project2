@@ -33,7 +33,9 @@ public class GameManager: MonoBehaviour {
 	}
 	IEnumerator doEnableVR()
 	{
-		while(UnityEngine.XR.XRSettings.loadedDeviceName != "OpenVR")
+        vrCameraRigControlCenter.SetActive(false);
+        vrCameraRig.SetActive(false);
+        while (UnityEngine.XR.XRSettings.loadedDeviceName != "OpenVR")
 		{
 			UnityEngine.XR.XRSettings.LoadDeviceByName("OpenVR");
 			yield return null;
@@ -42,13 +44,13 @@ public class GameManager: MonoBehaviour {
 
         if (rovercameraset)
         {
-            vrCameraRigControlCenter.SetActive(false);
+           
             vrCameraRig.SetActive(true);
         }
         else
         {
             vrCameraRigControlCenter.SetActive(true);
-            vrCameraRig.SetActive(false);
+            
         }
         nonVRCameraRig.SetActive(false);
 	}
