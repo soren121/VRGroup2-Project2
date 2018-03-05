@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class LittleRoverScript : MonoBehaviour {
+public class LittleRoverScript : NetworkBehaviour {
 
     public GameObject BigRover;
     public GameObject BigCenter;
@@ -17,11 +17,11 @@ public class LittleRoverScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        moveLittleRover();
+        CmdMoveLittleRover();
     }
 
     [Command]
-    public void moveLittleRover()
+    public void CmdMoveLittleRover()
     {
         Vector3 differencePos = BigRover.transform.position - BigCenter.transform.position;
         differencePos = differencePos * .1f;
