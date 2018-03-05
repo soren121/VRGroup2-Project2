@@ -15,11 +15,11 @@ public class LittleRoverScript : NetworkBehaviour {
 	}
 
 	[ClientRpc]
-	public void UpdateFromBigRover(Transform roverTransform)
+	public void UpdateFromBigRover(Vector3 roverPos, Quaternion roverRot)
 	{
-		Vector3 differencePos = roverTransform.position - BigCenter.transform.position;
+		Vector3 differencePos = roverPos - BigCenter.transform.position;
 		differencePos = differencePos * .1f;
-		gameObject.transform.rotation = roverTransform.rotation;
+		gameObject.transform.rotation = roverRot;
 		differencePos = differencePos * .1f;
 		gameObject.transform.position = LittleCenter.transform.position + differencePos;
 	}

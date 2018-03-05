@@ -10,9 +10,6 @@ using UnityEngine.Networking;
 public class VRPlayer : NetworkBehaviour {
 	//public Blinker hmdBlinker;
 
-
-
-
 	public Transform SteamVR_Rig;
 	public SteamVR_TrackedObject hmd;
 	public SteamVR_TrackedObject controllerLeft;
@@ -78,10 +75,6 @@ public class VRPlayer : NetworkBehaviour {
 		//Debug.Log(Input.GetJoystickNames());
 		//float motor = maxMotorTorque * Input.GetAxis("Vertical");
 		//float steering = maxSteeringAngle * Input.GetAxis("Horizontal");
-		
-		if (isServer) {
-			littleRover.GetComponent<LittleRoverScript> ().UpdateFromBigRover (rover);
-		}
 
 		if (isLocalPlayer)
 		{
@@ -108,18 +101,18 @@ public class VRPlayer : NetworkBehaviour {
 			}
 			else
 			{
-				
-
 				float vertical = Input.GetAxis("Vertical");
 				float horizontal = Input.GetAxis("Horizontal");
 				transform.Translate(vertical * Time.fixedDeltaTime * (new Vector3(0, 0, 1)));
 				transform.Translate(horizontal * Time.fixedDeltaTime * (new Vector3(1, 0, 0)));
-
-
 			}
-			CmdSyncPlayer(head.transform.position,head.transform.rotation, handLeft.transform.position, handLeft.transform.rotation, handRight.transform.position, handRight.transform.rotation, rover.position, rover.rotation);
-		}else
-		{
+
+			if (rover != null) {
+				CmdSyncRover (rover.position, rover.rotation);
+			}
+
+			CmdSyncPlayer(head.transform.position,head.transform.rotation, handLeft.transform.position, handLeft.transform.rotation, handRight.transform.position, handRight.transform.rotation);
+		} else {
 			//runs on all other clients and  the server
 			//move to the syncvars
 			head.position = Vector3.Lerp(head.position, headPos,.2f);
@@ -129,15 +122,16 @@ public class VRPlayer : NetworkBehaviour {
 			handRight.transform.position = rightHandPos;
 			handRight.transform.rotation = rightHandRot;
 
+			if (rover == null) {
+				littleRover.GetComponent<LittleRoverScript> ().UpdateFromBigRover (roverPos, roverRot);
+			}
 		}
 
 	}
 
 	[Command]
-	void CmdSyncPlayer(Vector3 pos, Quaternion rot, Vector3 lhpos, Quaternion lhrot, Vector3 rhpos, Quaternion rhrot, Vector3 roverpos, Quaternion roverrot)
+	void CmdSyncPlayer(Vector3 pos, Quaternion rot, Vector3 lhpos, Quaternion lhrot, Vector3 rhpos, Quaternion rhrot)
 	{
-        rover.transform.position = roverpos;
-        rover.rotation = roverrot;
 		head.transform.position = pos;
 		head.transform.rotation = rot;
 		handLeft.transform.position = lhpos;
@@ -150,8 +144,15 @@ public class VRPlayer : NetworkBehaviour {
 		leftHandRot = lhrot;
 		rightHandPos = rhpos;
 		rightHandRot = rhrot;
-
 	}
+
+	[Command]
+	void CmdSyncRover(Vector3 pos, Quaternion rot)
+	{
+		roverPos = pos;
+		roverRot = rot;
+	}
+
 	private void copyTransform(Transform from, Transform to)
 	{
 		to.position = from.position;
