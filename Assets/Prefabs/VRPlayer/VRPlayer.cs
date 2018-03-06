@@ -45,8 +45,11 @@ public class VRPlayer : NetworkBehaviour {
 
 	void Start () {
 		head.transform.position = new Vector3(0, 4, 0);
-		rover = GameObject.Find("BigRover").transform;
-		rover.gameObject.SetActive (true);
+		var roverObj = GameObject.Find ("BigRover");
+		if (roverObj != null) {
+			rover = roverObj.transform;
+		}
+			
 		littleRover = GameObject.Find ("littleRover");
 		bigCenter = bigCenter.transform.GetChild (0).gameObject;
 		littleCenter = littleCenter.transform.GetChild (0).gameObject;
