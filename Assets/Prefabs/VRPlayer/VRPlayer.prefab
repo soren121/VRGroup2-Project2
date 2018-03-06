@@ -276,8 +276,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1108269976059850}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.05}
-  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
+  m_LocalPosition: {x: 0, y: 0, z: 0.11}
+  m_LocalScale: {x: 0.26, y: 0.05, z: 0.05}
   m_Children: []
   m_Father: {fileID: 4112510108374950}
   m_RootOrder: 0
@@ -358,13 +358,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1342771304766928}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.05}
-  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0.11}
+  m_LocalScale: {x: 0.26, y: 0.05, z: 0.05}
   m_Children: []
   m_Father: {fileID: 4866218502735840}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!4 &4866218502735840
 Transform:
   m_ObjectHideFlags: 1
@@ -388,7 +388,7 @@ Transform:
   m_GameObject: {fileID: 1863481666126980}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 3.2400994, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4495100679604154}
   m_Father: {fileID: 4647951103088396}
@@ -401,7 +401,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1639727942240516}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.681, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4250669891223522}
@@ -592,7 +592,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: e3d0fa669d2c0714180673b62b83d270, type: 2}
+  - {fileID: 2100000, guid: 4a25878ef6bcf75458ff47fa8bd8dfe5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -761,11 +761,9 @@ MonoBehaviour:
   lastHipPosition: {x: 0, y: 0, z: 0}
   isWalking: 0
   rover: {fileID: 0}
-  littleRover: {fileID: 1714987490199272, guid: 6d93c33aa81e5a643bd9853d134bd005,
-    type: 2}
-  bigCenter: {fileID: 1817122038077546, guid: 14c95f76d4adf4c97ab1161705c62325, type: 2}
-  littleCenter: {fileID: 1035602861537044, guid: 6d93c33aa81e5a643bd9853d134bd005,
-    type: 2}
+  littleRover: {fileID: 0}
+  bigCenter: {x: 0, y: 0, z: 0}
+  littleCenter: {x: 0, y: 0, z: 0}
   thrust: 0
 --- !u!114 &114793587382229496
 MonoBehaviour:

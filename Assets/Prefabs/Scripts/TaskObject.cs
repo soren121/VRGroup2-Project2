@@ -12,6 +12,7 @@ public class TaskObject : MonoBehaviour {
     private DateTime completionMoment;
     private TaskObjectManager taskManager;
 
+
 	// Use this for initialization
 	void Start () {
         goalObjects = transform.GetComponentsInChildren<GoalObject>();
@@ -33,46 +34,11 @@ public class TaskObject : MonoBehaviour {
         }
     }
 
-    void OnTriggerStay(Collider other){
-        GoalObject go = other.gameObject.GetComponent<GoalObject>();
-        if(go != null){
-            // find it in original set of GoalObjects and set that it's inside task space
-            for(int i = 0; i < goalObjects.Length; i++) {
-                if(goalObjects[i].gameObject.GetInstanceID() == go.gameObject.GetInstanceID()) {
-                    go.setInsideTaskSpace(true);
-                }
-            }
-        }
-    }
- 
-    void OnTriggerExit(Collider other){
-        GoalObject go = other.gameObject.GetComponent<GoalObject>();
-        if(go != null){
-            // find it in original set of GoalObjects and set that it's not inside task space
-            for(int i = 0; i < goalObjects.Length; i++) {
-                if(goalObjects[i].gameObject.GetInstanceID() == go.gameObject.GetInstanceID()) {
-                    go.setInsideTaskSpace(false);
-                }
-            }
-        }
-    }
-
     // constantly checks if this task has met completion condition
     private IEnumerator checkTaskCompleted() {
-        // give objects enough time to roll away (outside of task space)
-        yield return new WaitForSeconds(5);
-        // constantly check if all objects are back in task space (rover brought them all back)
-        while(true) {
-            bool allGoalObjectsInTaskSpace = true;
-            for(int i = 0; i < goalObjects.Length; i++) {
-                if(!goalObjects[i].getInsideTaskSpace()) {
-                    allGoalObjectsInTaskSpace = false;
-                    break;
-                }
-            }
-            if(allGoalObjectsInTaskSpace) break;
-            else yield return null;
-        }
+        // constantly check if all gaol objects are not eaten
+		UnityEngine.Debug.Log(transform.GetComponentsInChildren<GoalObject>().Length);
+		while(transform.GetComponentsInChildren<GoalObject>().Length > 0) yield return null;
         // task has been completed
         onTaskCompleted();
     }

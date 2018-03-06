@@ -47,13 +47,13 @@ public class GameManager: NetworkBehaviour {
 
         if (roverCameraSet)
         {
-           
+			vrCameraRigControlCenter.SetActive (false);
             vrCameraRig.SetActive(true);
         }
         else
         {
             vrCameraRigControlCenter.SetActive(true);
-            
+			vrCameraRig.SetActive (false);
         }
         nonVRCameraRig.SetActive(false);
 	}

@@ -27,7 +27,7 @@ public class BigTerrainScript : MonoBehaviour {
         {
             collision.rigidbody.isKinematic = true;
             collision.rigidbody.useGravity = true;
-
+			Destroy(collision.gameObject.GetComponent<Rigidbody>());
         }
         yield return null;
     }

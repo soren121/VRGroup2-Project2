@@ -149,10 +149,6 @@ public class VRPlayer : NetworkBehaviour {
 	[ClientRpc]
 	void RpcSyncLittleRover(Vector3 pos, Quaternion rot)
 	{
-		Debug.Log ("pos"+ pos);
-		Debug.Log ("rot" + rot);
-		Debug.Log ("bc" + bigCenter);
-		Debug.Log ("lc" + littleCenter);
 		Vector3 diff = bigCenter - littleCenter;
 		littleRover.transform.position = littleCenter;
 
