@@ -25,8 +25,8 @@ public class VRPlayer : NetworkBehaviour {
 	public bool isWalking;
 	public Transform rover;
 	public GameObject littleRover;
-	public GameObject bigCenter;
-	public GameObject littleCenter;
+	public Vector3 bigCenter;
+	public Vector3 littleCenter;
     
 	public float thrust;
 	// Use this for initialization
@@ -51,8 +51,8 @@ public class VRPlayer : NetworkBehaviour {
 		}
 			
 		littleRover = GameObject.Find ("littleRover");
-		bigCenter = bigCenter.transform.GetChild (0).gameObject;
-		littleCenter = littleCenter.transform.GetChild (0).gameObject;
+		bigCenter = new Vector3(244.133f, 37.995f, 228.52f);
+		littleCenter = new Vector3(1.38f, 0.489f, 0.286f);
 	}
 	
 	void Update () {
@@ -80,8 +80,8 @@ public class VRPlayer : NetworkBehaviour {
 		//float motor = maxMotorTorque * Input.GetAxis("Vertical");
 		//float steering = maxSteeringAngle * Input.GetAxis("Horizontal");
 
-		if (isServer) {
-			RpcSyncLittleRover (rover.position, rover.rotation);
+		if (isServer && rover.gameObject.activeSelf) {
+			RpcSyncLittleRover (rover.position, rover.localRotation);
 		}
 
 		if (isLocalPlayer)
@@ -149,11 +149,22 @@ public class VRPlayer : NetworkBehaviour {
 	[ClientRpc]
 	void RpcSyncLittleRover(Vector3 pos, Quaternion rot)
 	{
-		Vector3 differencePos = pos - bigCenter.transform.position;
-		differencePos = differencePos * .1f;
+		Debug.Log ("pos"+ pos);
+		Debug.Log ("rot" + rot);
+		Debug.Log ("bc" + bigCenter);
+		Debug.Log ("lc" + littleCenter);
+		Vector3 diff = bigCenter - littleCenter;
+		littleRover.transform.position = littleCenter;
+
+
+
+
+
+
+		Vector3 differencePos = pos - bigCenter;
+		differencePos = differencePos * .01f;
 		littleRover.transform.rotation = rot;
-		differencePos = differencePos * .1f;
-		littleRover.transform.position = littleCenter.transform.position + differencePos;
+		littleRover.transform.position = littleCenter + differencePos;
 	}
 
 	private void copyTransform(Transform from, Transform to)
