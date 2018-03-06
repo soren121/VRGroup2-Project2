@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
+using UnityEngine.Networking;
 
 [System.Serializable]
 public class AxleInfo {
@@ -12,7 +12,7 @@ public class AxleInfo {
 
 }
 
-public class CarScript : MonoBehaviour {
+public class CarScript : NetworkBehaviour {
 	public List<AxleInfo> axleInfos; 
 	public float maxMotorTorque;
 	public float maxSteeringAngle;
@@ -48,10 +48,18 @@ public class CarScript : MonoBehaviour {
 
 	public void FixedUpdate()
 	{
-        cam.position = rover.position;// + 3*Vector3.down + Vector3.back;
+		NetworkInstanceId roverId = this.netId;
+		CmdLocomotion (roverId);
+	}
+
+	[Command]
+	public void CmdLocomotion(NetworkInstanceId roverId)
+	{
+		var remoteRover = NetworkServer.FindLocalObject (roverId).transform;
+		cam.position = remoteRover.position;// + 3*Vector3.down + Vector3.back;
 		//Debug.Log(Input.GetJoystickNames());
-		float motor = maxMotorTorque * Input.GetAxis("Vertical");
-		float steering = maxSteeringAngle * Input.GetAxis("Horizontal");
+		float motor = maxMotorTorque * Input.GetAxis ("Vertical");
+		float steering = maxSteeringAngle * Input.GetAxis ("Horizontal");
 		//float motor = maxMotorTorque * getJoystick(lh).y;
 		//float steering = maxSteeringAngle * getJoystick(rh).x;
 
@@ -64,8 +72,8 @@ public class CarScript : MonoBehaviour {
 				axleInfo.leftWheel.motorTorque = motor;
 				axleInfo.rightWheel.motorTorque = motor;
 			}
-			ApplyLocalPositionToVisuals(axleInfo.leftWheel);
-			ApplyLocalPositionToVisuals(axleInfo.rightWheel);
+			ApplyLocalPositionToVisuals (axleInfo.leftWheel);
+			ApplyLocalPositionToVisuals (axleInfo.rightWheel);
 		}
 	}
 }

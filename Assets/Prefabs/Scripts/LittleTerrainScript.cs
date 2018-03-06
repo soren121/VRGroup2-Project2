@@ -32,19 +32,13 @@ public class LittleTerrainScript : MonoBehaviour
     // Determines what hit the floor, and then performs the appropriate action
     private IEnumerator handleCollision(Collision collision)
     {
-        if ((collision.transform.name == "TaskObject" && collision.rigidbody.isKinematic == false) || 
-            (collision.transform.name == "TaskObject (1)" && collision.rigidbody.isKinematic == false) ||
-            (collision.transform.name == "TaskObject (2)" && collision.rigidbody.isKinematic == false) ||
-            (collision.transform.name == "TaskObject (3)" && collision.rigidbody.isKinematic == false)
-            )
-        {
+        if (collision.gameObject.GetComponent<TaskObject>() != null && 
+            collision.rigidbody.isKinematic == false) {
             //Make the TaskObject so that it won't bounce everywhere if you drop it on the terrain
             collision.rigidbody.isKinematic = true;
-            yield return new WaitForSeconds(1);
 
             //get the TaskObject position
             Vector3 otherPos = collision.transform.position;
-            Debug.Log(collision.transform.name + " has position position " + collision.transform.name);
 
             //get the difference from the position of the taskObject and the little terrain center
             Vector3 differencePos = collision.transform.position - LittleCenter.transform.position;

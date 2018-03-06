@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VR;
-public class GameManager: MonoBehaviour {
+using UnityEngine.Networking;
+
+public class GameManager: NetworkBehaviour {
 
 	public GameObject vrCameraRig;
     public GameObject vrCameraRigControlCenter;
 	public GameObject nonVRCameraRig;
-    public bool rovercameraset;
+	public GameObject rover;
+	[HideInInspector]
+    public bool roverCameraSet;
 	//public Blinker hmdBlinker;
 	public SteamVR_TrackedObject hmd;
 	public SteamVR_TrackedObject controllerLeft;
@@ -18,19 +22,18 @@ public class GameManager: MonoBehaviour {
 	}
 	public void enableRover()
     {
-        rovercameraset = true;
+        roverCameraSet = true;
     }
 	// Update is called once per frame
 	void Update () {
 		
 	}
+
 	public void enableVR()
 	{
-
 		StartCoroutine(doEnableVR());
-
-
 	}
+
 	IEnumerator doEnableVR()
 	{
         vrCameraRigControlCenter.SetActive(false);
@@ -42,7 +45,7 @@ public class GameManager: MonoBehaviour {
 		}
 		UnityEngine.XR.XRSettings.enabled = true;
 
-        if (rovercameraset)
+        if (roverCameraSet)
         {
            
             vrCameraRig.SetActive(true);

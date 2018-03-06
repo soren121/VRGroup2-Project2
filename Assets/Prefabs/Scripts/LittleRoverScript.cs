@@ -5,23 +5,12 @@ using UnityEngine.Networking;
 
 public class LittleRoverScript : NetworkBehaviour {
 
-    public GameObject BigRover;
-    public GameObject BigCenter;
-    public GameObject LittleRover;
-    public GameObject LittleCenter;
-
-	// Use this for initialization
-	void Start () {
-		
+	public void UpdateFromBigRover(GameObject bigCenter, GameObject littleCenter, Vector3 roverPos, Quaternion roverRot)
+	{
+		Vector3 differencePos = roverPos - bigCenter.transform.position;
+		differencePos = differencePos * .1f;
+		gameObject.transform.rotation = roverRot;
+		differencePos = differencePos * .1f;
+		gameObject.transform.position = littleCenter.transform.position + differencePos;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-        Vector3 differencePos = BigRover.transform.position - BigCenter.transform.position;
-        differencePos = differencePos * .1f;
-        LittleRover.transform.rotation = BigRover.transform.rotation;
-        differencePos = differencePos * .1f;
-        LittleRover.transform.position = LittleCenter.transform.position + differencePos;
-    }
-    
 }

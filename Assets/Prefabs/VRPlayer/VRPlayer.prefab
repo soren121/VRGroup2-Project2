@@ -222,7 +222,7 @@ GameObject:
   - component: {fileID: 114793587382229496}
   m_Layer: 0
   m_Name: VRPlayer
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -761,6 +761,12 @@ MonoBehaviour:
   lastHipPosition: {x: 0, y: 0, z: 0}
   isWalking: 0
   rover: {fileID: 0}
+  littleRover: {fileID: 1714987490199272, guid: 6d93c33aa81e5a643bd9853d134bd005,
+    type: 2}
+  bigCenter: {fileID: 1817122038077546, guid: 14c95f76d4adf4c97ab1161705c62325, type: 2}
+  littleCenter: {fileID: 1035602861537044, guid: 6d93c33aa81e5a643bd9853d134bd005,
+    type: 2}
+  thrust: 0
 --- !u!114 &114793587382229496
 MonoBehaviour:
   m_ObjectHideFlags: 1
