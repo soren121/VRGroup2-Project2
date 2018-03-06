@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class LittleTerrainScript : MonoBehaviour
+public class LittleTerrainScript : NetworkBehaviour
 {
     public GameObject TaskObject;
     public GameObject BigTerrain;
@@ -32,7 +33,7 @@ public class LittleTerrainScript : MonoBehaviour
     // Determines what hit the floor, and then performs the appropriate action
     private IEnumerator handleCollision(Collision collision)
     {
-        if (collision.gameObject.GetComponent<TaskObject>() != null && 
+		if (collision.gameObject.GetComponent<TaskCube>() != null && 
             collision.rigidbody.isKinematic == false) {
             //Make the TaskObject so that it won't bounce everywhere if you drop it on the terrain
             collision.rigidbody.isKinematic = true;
@@ -50,21 +51,28 @@ public class LittleTerrainScript : MonoBehaviour
             //differencePos = differencePos * 100f;
             Vector3 newPos = BigCenter.transform.position + differencePos;
 
+
+			GameObject newTask = GameObject.Instantiate(TaskObject);
+			newTask.transform.localScale += new Vector3(10, 10, 10);
+			newTask.transform.position += newPos;
+			//Network.Instantiate (TaskObject, newPos, Quaternion.identity, 0);
+
+			//create checkpoint
+			GameObject newCheckPoint = GameObject.Instantiate(CheckPoint);
+			newCheckPoint.transform.position += newPos;
+			newCheckPoint.transform.parent = newTask.transform;
+
+			//disable renderer on the taskObject container so that it can be used as a task boundary
+			newTask.transform.GetComponent<Renderer>().enabled = false;
+			newTask.GetComponent<Rigidbody>().useGravity = true;
+			newTask.GetComponent<Rigidbody>().isKinematic= false;
+			collision.rigidbody.useGravity = false;
+
+			NetworkServer.Spawn (newTask);
+			NetworkServer.Spawn (newCheckPoint);
+
             //create the taskObject in the correct location on the big terrain
-            GameObject newTask = GameObject.Instantiate(TaskObject);
-            newTask.transform.localScale += new Vector3(10, 10, 10);
-            newTask.transform.position += newPos;
 
-            //create checkpoint
-            GameObject newCheckPoint = GameObject.Instantiate(CheckPoint);
-            newCheckPoint.transform.position += newPos;
-            newCheckPoint.transform.parent = newTask.transform;
-
-            //disable renderer on the taskObject container so that it can be used as a task boundary
-            newTask.transform.GetComponent<Renderer>().enabled = false;
-            newTask.GetComponent<Rigidbody>().useGravity = true;
-            newTask.GetComponent<Rigidbody>().isKinematic= false;
-            collision.rigidbody.useGravity = false;
                 
         }
         yield return null;

@@ -34,6 +34,10 @@ public class GameManager: NetworkBehaviour {
 		StartCoroutine(doEnableVR());
 	}
 
+	public void endSession() {
+		Application.Quit ();
+	}
+
 	IEnumerator doEnableVR()
 	{
         vrCameraRigControlCenter.SetActive(false);

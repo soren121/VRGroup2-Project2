@@ -9491,7 +9491,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78e32796810d9854ea364b05eedc14b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TaskObject: {fileID: 0}
+  TaskObject: {fileID: 1064063883921724, guid: d15b0c18096c04fc1a4db17d938c38d7, type: 2}
   BigTerrain: {fileID: 1817122038077546}
   BigCenter: {fileID: 1265592958716812}
   LittleTerrain: {fileID: 1118206719493174}

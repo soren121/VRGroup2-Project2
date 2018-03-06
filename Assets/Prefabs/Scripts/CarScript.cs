@@ -56,7 +56,7 @@ public class CarScript : NetworkBehaviour {
 	public void CmdLocomotion(NetworkInstanceId roverId)
 	{
 		var remoteRover = NetworkServer.FindLocalObject (roverId).transform;
-		cam.position = remoteRover.position;// + 3*Vector3.down + Vector3.back;
+		cam.position = remoteRover.position + Vector3.up + 2*Vector3.back;
 
 		//Debug.Log(Input.GetJoystickNames());
 		float motor = maxMotorTorque * Input.GetAxis ("Vertical");

@@ -5,6 +5,9 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/lunar_rover_simulation.unity
-    guid: 807e7dd43e8a94032a0b569e66be1aa2
+    guid: 0ed7bd7e744ad454598d84f2a55301ab

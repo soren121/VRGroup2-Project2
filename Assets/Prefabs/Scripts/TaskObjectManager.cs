@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using SimpleJSON;
+using System.IO;
 
 public class TaskObjectManager : MonoBehaviour {
 
-    private JSONNode data;
+    private JSONObject data;
 
 	// Use this for initialization
 	void Start () {
@@ -36,11 +37,6 @@ public class TaskObjectManager : MonoBehaviour {
                     task.Add("numGoalObjects", new JSONNumber(t.getNumGoalObjects()));
                     // add task to session["tasks"] array
                     data["session"]["tasks"].AsArray.Add(task);
-                    // debug log the task data
-                    Debug.Log("spawnMoment: "+t.getSpawnMoment());
-                    Debug.Log("roverEnterMoment: "+t.getRoverEnterMoment());
-                    Debug.Log("completionMoment: "+t.getCompletionMoment());
-                    Debug.Log("numGoalObjects: "+t.getNumGoalObjects());
                     // destroy TaskObject
                     GameObject.Destroy(t.gameObject);
                     break;
@@ -48,18 +44,16 @@ public class TaskObjectManager : MonoBehaviour {
             }
         }
     }
+		
 
     // called when either a) the user unclicks the play button in the editor, or
     // b) the user in the command center clicks the 'end session' button
     void OnApplicationQuit() {
         // set session end time
         data["session"].AsObject.Add("end", new JSONString(DateTime.UtcNow.ToString()));
-        // log this in player prefs
+		// log to file
+		File.WriteAllText (Application.persistentDataPath+"/lunar_rover_simulation_session_data.txt", data.ToString ());
+		Debug.Log(File.ReadAllText(Application.persistentDataPath+"/lunar_rover_simulation_session_data.txt"));
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
 }

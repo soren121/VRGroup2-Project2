@@ -53,6 +53,11 @@ public class VRPlayer : NetworkBehaviour {
 		littleRover = GameObject.Find ("littleRover");
 		bigCenter = new Vector3(244.133f, 37.995f, 228.52f);
 		littleCenter = new Vector3(1.38f, 0.489f, 0.286f);
+
+		// Set as ready
+		if (!isServer) {
+			NetworkServer.SetClientReady (connectionToClient);
+		}
 	}
 	
 	void Update () {
@@ -151,11 +156,6 @@ public class VRPlayer : NetworkBehaviour {
 	{
 		Vector3 diff = bigCenter - littleCenter;
 		littleRover.transform.position = littleCenter;
-
-
-
-
-
 
 		Vector3 differencePos = pos - bigCenter;
 		differencePos = differencePos * .01f;
