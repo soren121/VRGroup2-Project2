@@ -2870,8 +2870,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1714987490199272}
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: 0.013106144, y: -2.5317, z: -5.0752654}
+  m_LocalRotation: {x: 0.07931536, y: -0.00006113122, z: -0.0015588419, w: 0.99684834}
+  m_LocalPosition: {x: -0.000580551, y: -2.6936142, z: -5.1474247}
   m_LocalScale: {x: 0.6898037, y: 0.70656604, z: 1}
   m_Children:
   - {fileID: 4871487593496742}
@@ -9353,10 +9353,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fc983eef0c760e4fb286111b4599617, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BigRover: {fileID: 0}
-  BigCenter: {fileID: 0}
-  LittleRover: {fileID: 1714987490199272}
-  LittleCenter: {fileID: 1127944514211724}
 --- !u!114 &114556631288200034
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9384,6 +9380,7 @@ MonoBehaviour:
   BigCenter: {fileID: 0}
   LittleTerrain: {fileID: 1035602861537044}
   LittleCenter: {fileID: 1127944514211724}
+  CheckPoint: {fileID: 0}
 --- !u!154 &154692107898583612
 TerrainCollider:
   m_ObjectHideFlags: 1

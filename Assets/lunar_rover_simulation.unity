@@ -621,6 +621,7 @@ MonoBehaviour:
   lastHipPosition: {x: 0, y: 0, z: 0}
   isWalking: 0
   rover: {fileID: 0}
+  littleRover: {fileID: 0}
   thrust: 0
 --- !u!114 &735114937
 MonoBehaviour:
@@ -1240,6 +1241,7 @@ MonoBehaviour:
   lastHipPosition: {x: 0, y: 0, z: 0}
   isWalking: 0
   rover: {fileID: 0}
+  littleRover: {fileID: 0}
   thrust: 0
 --- !u!114 &1310866361
 MonoBehaviour:
