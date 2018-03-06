@@ -734,6 +734,78 @@ Prefab:
       propertyPath: m_Name
       value: VRutton
       objectReference: {fileID: 0}
+    - target: {fileID: 114026656385896642, guid: ab0abb56e733e470281013859bdc3032,
+        type: 2}
+      propertyPath: m_Colors.m_NormalColor.r
+      value: 0.07450981
+      objectReference: {fileID: 0}
+    - target: {fileID: 114026656385896642, guid: ab0abb56e733e470281013859bdc3032,
+        type: 2}
+      propertyPath: m_Colors.m_NormalColor.g
+      value: 0.68235296
+      objectReference: {fileID: 0}
+    - target: {fileID: 114026656385896642, guid: ab0abb56e733e470281013859bdc3032,
+        type: 2}
+      propertyPath: m_Colors.m_NormalColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114859390934346128, guid: ab0abb56e733e470281013859bdc3032,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114859390934346128, guid: ab0abb56e733e470281013859bdc3032,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114859390934346128, guid: ab0abb56e733e470281013859bdc3032,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114859390934346128, guid: ab0abb56e733e470281013859bdc3032,
+        type: 2}
+      propertyPath: m_Text
+      value: 'Virtual Reality Mode
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 114859390934346128, guid: ab0abb56e733e470281013859bdc3032,
+        type: 2}
+      propertyPath: m_FontData.m_FontStyle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114026656385896642, guid: ab0abb56e733e470281013859bdc3032,
+        type: 2}
+      propertyPath: m_Colors.m_HighlightedColor.r
+      value: 0.101960786
+      objectReference: {fileID: 0}
+    - target: {fileID: 114026656385896642, guid: ab0abb56e733e470281013859bdc3032,
+        type: 2}
+      propertyPath: m_Colors.m_HighlightedColor.g
+      value: 0.8156863
+      objectReference: {fileID: 0}
+    - target: {fileID: 114026656385896642, guid: ab0abb56e733e470281013859bdc3032,
+        type: 2}
+      propertyPath: m_Colors.m_HighlightedColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114026656385896642, guid: ab0abb56e733e470281013859bdc3032,
+        type: 2}
+      propertyPath: m_Colors.m_PressedColor.r
+      value: 0.04715072
+      objectReference: {fileID: 0}
+    - target: {fileID: 114026656385896642, guid: ab0abb56e733e470281013859bdc3032,
+        type: 2}
+      propertyPath: m_Colors.m_PressedColor.g
+      value: 0.457
+      objectReference: {fileID: 0}
+    - target: {fileID: 114026656385896642, guid: ab0abb56e733e470281013859bdc3032,
+        type: 2}
+      propertyPath: m_Colors.m_PressedColor.b
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ab0abb56e733e470281013859bdc3032, type: 2}
   m_IsPrefabParent: 0
@@ -961,7 +1033,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: -0.022058845, g: 0.0008109877, b: 0.0008109877, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -971,7 +1043,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 14
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
@@ -1035,7 +1107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 0.014705896, g: -0.00021626339, b: -0.00021626339, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1045,7 +1117,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 14
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
@@ -1364,9 +1436,9 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_NormalColor: {r: 0.8161765, g: -0.012002607, b: -0.012002607, a: 1}
+    m_HighlightedColor: {r: 0.828, g: 0.20451598, b: 0.20451598, a: 1}
+    m_PressedColor: {r: 0.376, g: 0.005875, b: 0.005875, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -1486,9 +1558,9 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_NormalColor: {r: 0.08235294, g: 0.7411765, b: 0.003921569, a: 1}
+    m_HighlightedColor: {r: 0.10291948, g: 0.814, b: 0, a: 1}
+    m_PressedColor: {r: 0.047058824, g: 0.45882353, b: 0, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
