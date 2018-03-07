@@ -831,7 +831,6 @@ GameObject:
   - component: {fileID: 4827018811228474}
   - component: {fileID: 54719372480543026}
   - component: {fileID: 64895312620514248}
-  - component: {fileID: 114945874241466858}
   - component: {fileID: 114897003905566620}
   m_Layer: 0
   m_Name: littleRover
@@ -8386,16 +8385,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3fc983eef0c760e4fb286111b4599617, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114945874241466858
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1530372885981536}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf5a2a2b4ebe4f2438b0465661213e71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

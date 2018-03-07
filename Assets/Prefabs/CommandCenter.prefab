@@ -1630,7 +1630,6 @@ GameObject:
   - component: {fileID: 4407695592028348}
   - component: {fileID: 54253907073858004}
   - component: {fileID: 64747303788950976}
-  - component: {fileID: 114054823302554714}
   - component: {fileID: 114867143000192164}
   m_Layer: 0
   m_Name: littleRover
@@ -9313,17 +9312,6 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &114054823302554714
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1865525356217916}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf5a2a2b4ebe4f2438b0465661213e71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114605150989532468
 MonoBehaviour:
   m_ObjectHideFlags: 1

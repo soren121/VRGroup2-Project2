@@ -1169,10 +1169,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4721994450714738}
-  - component: {fileID: 114872297707316930}
-  - component: {fileID: 114578580033101538}
-  - component: {fileID: 114334554139210088}
-  - component: {fileID: 114246753778315568}
   m_Layer: 0
   m_Name: BigRoverGraphics
   m_TagString: Untagged
@@ -7332,58 +7328,6 @@ MonoBehaviour:
   bigCenter: {x: 0, y: 0, z: 0}
   littleCenter: {x: 0, y: 0, z: 0}
   thrust: 0
---- !u!114 &114246753778315568
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1725144368340566}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff716959ff221da49907858955bae5b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  axleInfos: []
-  maxMotorTorque: 0
-  maxSteeringAngle: 0
-  cam: {fileID: 0}
-  rover: {fileID: 0}
-  lefthand: {fileID: 0}
-  lh: {fileID: 0}
-  righthand: {fileID: 0}
-  rh: {fileID: 0}
---- !u!114 &114334554139210088
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1725144368340566}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 222
-    i1: 129
-    i2: 246
-    i3: 5
-    i4: 98
-    i5: 105
-    i6: 181
-    i7: 180
-    i8: 43
-    i9: 60
-    i10: 6
-    i11: 36
-    i12: 75
-    i13: 22
-    i14: 250
-    i15: 174
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
 --- !u!114 &114550622262831638
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7412,33 +7356,6 @@ MonoBehaviour:
   lh: {fileID: 0}
   righthand: {fileID: 0}
   rh: {fileID: 0}
---- !u!114 &114578580033101538
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1725144368340566}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed594dd46ac0d5248a84985448be0a69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SteamVR_Rig: {fileID: 0}
-  hmd: {fileID: 0}
-  controllerLeft: {fileID: 0}
-  controllerRight: {fileID: 0}
-  head: {fileID: 0}
-  handLeft: {fileID: 0}
-  handRight: {fileID: 0}
-  feet: {fileID: 0}
-  locomotionMode: 1
-  lastHipPosition: {x: 0, y: 0, z: 0}
-  isWalking: 0
-  rover: {fileID: 0}
-  littleRover: {fileID: 0}
-  bigCenter: {x: 0, y: 0, z: 0}
-  littleCenter: {x: 0, y: 0, z: 0}
-  thrust: 0
 --- !u!114 &114785774079102882
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7495,17 +7412,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   snapThreshold: 3
   snapThresholdRot: 3
---- !u!114 &114872297707316930
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1725144368340566}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf5a2a2b4ebe4f2438b0465661213e71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!136 &136312200498427730
 CapsuleCollider:
   m_ObjectHideFlags: 1
