@@ -25,7 +25,6 @@ public class NetworkSync : NetworkBehaviour
         networkVel = rb.velocity;
         networkRot = rb.rotation;
         networkAVel = rb.angularVelocity;
-
     }
 
     public override float GetNetworkSendInterval()
@@ -36,18 +35,12 @@ public class NetworkSync : NetworkBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-
-      if (hasAuthority)
-      {
-          CmdUpdate(rb.position, rb.velocity, rb.rotation, rb.angularVelocity);
-      }
-      else
-      {
-
+        if (hasAuthority) {
+            CmdUpdate(rb.position, rb.velocity, rb.rotation, rb.angularVelocity);
+        } else {
             rb.velocity = Vector3.Lerp(rb.velocity, networkVel, .1f);
             Vector3 offset = rb.position - networkPos;
-            if (offset.magnitude > snapThreshold)
-            {
+            if (offset.magnitude > snapThreshold) {
                 rb.position = Vector3.Lerp(rb.position, networkPos, .1f);
             }
 
@@ -56,14 +49,14 @@ public class NetworkSync : NetworkBehaviour
             float angle; Vector3 axis;
             Quaternion rOffset = rb.rotation * Quaternion.Inverse(networkRot);
             rOffset.ToAngleAxis(out angle, out axis);
-            if (Mathf.Abs(angle) > snapThresholdRot)
-            {
+            if (Mathf.Abs(angle) > snapThresholdRot) {
                 rb.rotation = Quaternion.Slerp(rb.rotation, networkRot, .1f);
             }
-		//CmdUpdate (rb.position, rb.velocity, rb.rotation, rb.angularVelocity);
-      }
-
+            
+            //CmdUpdate (rb.position, rb.velocity, rb.rotation, rb.angularVelocity);
+        }
     }
+
     [Command]
     void CmdUpdate(Vector3 pos, Vector3 vel, Quaternion rot, Vector3 aVel)
     {

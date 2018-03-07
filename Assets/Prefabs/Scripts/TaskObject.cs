@@ -12,7 +12,6 @@ public class TaskObject : MonoBehaviour {
     private DateTime completionMoment;
     private TaskObjectManager taskManager;
 
-
 	// Use this for initialization
 	void Start () {
         goalObjects = transform.GetComponentsInChildren<GoalObject>();

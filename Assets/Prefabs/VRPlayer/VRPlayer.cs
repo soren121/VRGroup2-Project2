@@ -4,9 +4,6 @@ using UnityEngine;
 using UnityEngine.VR;
 using UnityEngine.Networking;
 
-
-
-
 public class VRPlayer : NetworkBehaviour {
 	//public Blinker hmdBlinker;
 
@@ -19,16 +16,17 @@ public class VRPlayer : NetworkBehaviour {
 	public HandController handLeft;
 	public HandController handRight;
 	public Transform feet;
-	public enum LocomotionMode { TELEPORT, JOYSTICK_DRIVE, JOYSTICK_VEHICLE_DRIVE, FLYING, HUMAN_JOYSTICK, WALKING_IN_PLACE};
-	public LocomotionMode locomotionMode = LocomotionMode.JOYSTICK_DRIVE;
 	public Vector3 lastHipPosition;
 	public bool isWalking;
-	public Transform rover;
+	public float thrust;
+	
+	public Transform roverTransform;
 	public GameObject littleRover;
 	public Vector3 bigCenter;
 	public Vector3 littleCenter;
-    
-	public float thrust;
+	public GameObject taskObject;
+	public GameObject checkpoint;
+	
 	// Use this for initialization
 	[SyncVar]
 	Vector3 headPos;
@@ -45,24 +43,22 @@ public class VRPlayer : NetworkBehaviour {
 
 	void Start () {
 		head.transform.position = new Vector3(0, 4, 0);
-		var roverObj = GameObject.Find ("BigRover");
+		var roverObj = GameObject.Find("BigRover");
 		if (roverObj != null) {
-			rover = roverObj.transform;
+			roverTransform = roverObj.transform;
 		}
 			
-		littleRover = GameObject.Find ("littleRover");
+		littleRover = GameObject.Find("littleRover");
 		bigCenter = new Vector3(244.133f, 37.995f, 228.52f);
 		littleCenter = new Vector3(1.38f, 0.489f, 0.286f);
+	}
 
+	public void OnConnectedToServer()
+	{
 		// Set as ready
-		if (!isServer) {
-			NetworkServer.SetClientReady (connectionToClient);
-		}
+		NetworkServer.SetClientReady(connectionToClient);
 	}
-	
-	void Update () {
-	
-	}
+
 	public void ApplyLocalPositionToVisuals(WheelCollider collider)
 	{
 		if (collider.transform.childCount == 0) {
@@ -80,21 +76,13 @@ public class VRPlayer : NetworkBehaviour {
 	}
 	private void FixedUpdate()
 	{
-		//cam.position = rover.position;
-		//Debug.Log(Input.GetJoystickNames());
-		//float motor = maxMotorTorque * Input.GetAxis("Vertical");
-		//float steering = maxSteeringAngle * Input.GetAxis("Horizontal");
-
-		if (isServer && rover.gameObject.activeSelf) {
-			RpcSyncLittleRover (rover.position, rover.localRotation);
+		if (isServer && roverTransform.gameObject.activeInHierarchy && littleRover.activeInHierarchy) {
+			RpcSyncLittleRover(littleRover.GetComponent<NetworkIdentity>().netId, roverTransform.position, roverTransform.localRotation);
 		}
 
-		if (isLocalPlayer)
-		{
-			if (UnityEngine.XR.XRSettings.enabled)
-			{
-				if (SteamVR_Rig == null)
-				{
+		if (isLocalPlayer) {
+			if (UnityEngine.XR.XRSettings.enabled) {
+				if (SteamVR_Rig == null) {
 					GameManager gm = GameObject.Find("GameManager").GetComponent<GameManager>();
 					SteamVR_Rig = gm.vrCameraRig.transform;
 					hmd = gm.hmd;
@@ -110,10 +98,7 @@ public class VRPlayer : NetworkBehaviour {
 				//move the feet to be in the tracking space, but on the ground (maybe do this with physics to ensure a good foot position later)
 				feet.position = Vector3.Scale(head.position, new Vector3(1, 0, 1)) + Vector3.Scale(SteamVR_Rig.position, new Vector3(0, 1, 0));
 				handleControllerInputs();
-
-			}
-			else
-			{
+			} else {
 				float vertical = Input.GetAxis("Vertical");
 				float horizontal = Input.GetAxis("Horizontal");
 				transform.Translate(vertical * Time.fixedDeltaTime * (new Vector3(0, 0, 1)));
@@ -131,7 +116,6 @@ public class VRPlayer : NetworkBehaviour {
 			handRight.transform.position = rightHandPos;
 			handRight.transform.rotation = rightHandRot;
 		}
-
 	}
 
 	[Command]
@@ -152,22 +136,45 @@ public class VRPlayer : NetworkBehaviour {
 	}
 
 	[ClientRpc]
-	void RpcSyncLittleRover(Vector3 pos, Quaternion rot)
+	void RpcSyncLittleRover(NetworkInstanceId roverId, Vector3 pos, Quaternion rot)
 	{
+		GameObject clientRover = ClientScene.FindLocalObject(roverId);
+
 		Vector3 diff = bigCenter - littleCenter;
-		littleRover.transform.position = littleCenter;
+		clientRover.transform.position = littleCenter;
 
 		Vector3 differencePos = pos - bigCenter;
 		differencePos = differencePos * .01f;
-		littleRover.transform.rotation = rot;
-		littleRover.transform.position = littleCenter + differencePos;
+		clientRover.transform.rotation = rot;
+		clientRover.transform.position = littleCenter + differencePos;
 	}
+
+	[Command]
+    public void CmdInstantiateTaskObjects(Vector3 newPos)
+    {
+		GameObject newTask = Instantiate(taskObject, transform.position + newPos, Quaternion.identity) as GameObject;
+		newTask.transform.localScale += new Vector3(10, 10, 10);
+		//Network.Instantiate (TaskObject, newPos, Quaternion.identity, 0);
+
+		//create checkpoint
+		GameObject newCheckpoint = Instantiate(checkpoint, transform.position + newPos, Quaternion.identity) as GameObject;
+		newCheckpoint.transform.parent = newTask.transform;
+
+		//disable renderer on the taskObject container so that it can be used as a task boundary
+		newTask.transform.GetComponent<Renderer>().enabled = false;
+		newTask.GetComponent<Rigidbody>().useGravity = true;
+		newTask.GetComponent<Rigidbody>().isKinematic = false;
+
+        NetworkServer.Spawn(newTask);
+        NetworkServer.Spawn(newCheckpoint);
+    }
 
 	private void copyTransform(Transform from, Transform to)
 	{
 		to.position = from.position;
 		to.rotation = from.rotation;
 	}
+
 	private void handleControllerInputs()
 	{
 		int indexLeft = (int)controllerLeft.index;
@@ -185,47 +192,10 @@ public class VRPlayer : NetworkBehaviour {
 		Vector2 joyRight = getJoystick(controllerRight);
 		handLeft.squeeze(triggerLeft);
 		handRight.squeeze(triggerRight);
-
-		switch (locomotionMode)
-		{
-			case LocomotionMode.JOYSTICK_DRIVE:
-				{
-					drive(joyLeft, joyRight);
-					break;
-				}
-			case LocomotionMode.JOYSTICK_VEHICLE_DRIVE:
-				{
-					vehicleDrive(joyLeft, joyRight);
-					break;
-				}
-			case LocomotionMode.FLYING:
-				{
-					fly(joyLeft, joyRight);
-					break;
-				}
-			case LocomotionMode.HUMAN_JOYSTICK:
-				{
-					Vector3 footDispacement = (feet.position - SteamVR_Rig.position);
-					if (footDispacement.magnitude > .25f) {
-						vehicleDrive(new Vector2(footDispacement.x,footDispacement.z), Vector2.zero);
-					}
-					break;
-				}
-			case LocomotionMode.WALKING_IN_PLACE:
-				{
-					walkInPlace(joyLeft, joyRight);
-					break;
-				}
-			case LocomotionMode.TELEPORT:
-				{
-					handLeft.joystick(joyLeft);
-					handRight.joystick(joyRight);
-					break;
-				}
-		}
 		
-
+		vehicleDrive(joyLeft, joyRight);
 	}
+
 	private float getTrigger(SteamVR_TrackedObject controller)
 	{
 		return controller.index >= 0 ? SteamVR_Controller.Input((int)controller.index).GetAxis(Valve.VR.EVRButtonId.k_EButton_SteamVR_Trigger).magnitude : 0.0f;
@@ -248,41 +218,6 @@ public class VRPlayer : NetworkBehaviour {
 		return SteamVR_Rig.localToWorldMatrix.MultiplyVector(angularVelocity.normalized) * angularVelocity.magnitude ;
 	}
 
-	public void teleport(Vector3 pos, Vector3 forward)
-	{
-		//hmdBlinker.blink(.1f);
-		Vector3 offset = pos-feet.position;
-		SteamVR_Rig.Translate(offset, Space.World);
-		Vector3 facingDirection = new Vector3(head.forward.x,0,head.forward.z);
-		float angleBetween = Vector3.SignedAngle(facingDirection, forward, Vector3.up);
-		SteamVR_Rig.Rotate(Vector3.up, angleBetween, Space.World);
-	}
-	//called within an update method
-	public void drive(Vector2 leftJoystick, Vector2 rightJoystick)
-	{
-		//Debug.Log("Driving!");
-		float motor = Input.GetAxis("Vertical");
-		float steer = Input.GetAxis("Horizontal");
-		//float motor = leftJoystick.y;
-		//float steer = rightJoystick.x;
-		//Debug.Log("motor = " + motor);
-		//Debug.Log("steer = " + steer);
-
-		
-		Vector3 displacement = (motor*Vector3.forward) * Time.deltaTime;
-		rover.transform.Translate(displacement, Space.World);
-		rover.transform.Rotate(new Vector3(0, steer, 0));
-		
-		//we'll use the gaze in the x-z plane as the facing direction
-		/*Vector3 facingDirection = new Vector3(head.forward.x, 0, head.forward.z);
-		Vector3 rightDirection = new Vector3(head.right.x, 0, head.right.z);
-		Vector3 displacement = (facingDirection * leftJoystick.y + rightDirection*leftJoystick.x) * Time.deltaTime;
-		SteamVR_Rig.transform.Translate(displacement, Space.World);
-		float angleDisplacement = 90*rightJoystick.x * Time.deltaTime;
-		SteamVR_Rig.transform.Rotate(0, angleDisplacement, 0, Space.World);
-*/
-	}
-
 	//called within an update method
 	public void vehicleDrive(Vector2 leftJoystick, Vector2 rightJoystick)
 	{
@@ -292,47 +227,5 @@ public class VRPlayer : NetworkBehaviour {
 		Vector3 displacement = (facingDirection * leftJoystick.y + rightDirection*leftJoystick.x) * Time.deltaTime;
 		//Debug.Log(displacement);
 		//rover.AddRelativeForce(displacement * 10, ForceMode.Acceleration);
-
 	}
-
-	public void fly(Vector2 leftJoystick, Vector2 rightJoystick)
-	{
-		float leftSpeed = Mathf.Clamp(leftJoystick.y,0,1);
-		float rightSpeed = Mathf.Clamp(rightJoystick.y, 0, 1);
-		Vector3 leftDirection = handLeft.transform.forward;
-		Vector3 rightDirection = handRight.transform.forward;
-		Vector3 displacement = (leftDirection * leftSpeed + rightDirection * rightSpeed) * Time.deltaTime;
-		SteamVR_Rig.transform.Translate(displacement, Space.World);
-	}
-
-	public void walkInPlace(Vector2 leftJoystick, Vector2 rightJoystick)
-	{
-		Vector3 rightVector = handRight.transform.position - handLeft.transform.position;
-		rightVector = new Vector3(rightVector.x, 0, rightVector.z);
-		Vector3 facingDirection = Vector3.Cross(rightVector.normalized, Vector3.up);
-		if(Mathf.Abs(leftJoystick.y) > 0.1f && Mathf.Abs(rightJoystick.y) > 0.1f )
-		{
-			Vector3 hipPosition = (handLeft.transform.position + handRight.transform.position) / 2.0f;
-			if (!isWalking)
-			{
-				isWalking = true;
-				lastHipPosition = hipPosition;
-			}
-			else
-			{
-				//figure out the y displacement of the central point
-				float yDisplacement = Mathf.Abs(((handLeft.transform.position + handRight.transform.position) / 2).y - lastHipPosition.y);
-				//go forward by that y displacement
-				SteamVR_Rig.Translate(yDisplacement * facingDirection, Space.World);
-			}
-		}
-		else
-		{
-			isWalking = false;
-		}
-
-	}
-
-
-
 }

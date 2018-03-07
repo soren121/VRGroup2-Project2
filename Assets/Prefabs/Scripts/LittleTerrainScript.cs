@@ -5,33 +5,34 @@ using UnityEngine.Networking;
 
 public class LittleTerrainScript : NetworkBehaviour
 {
-    public GameObject TaskObject;
     public GameObject BigTerrain;
     public GameObject BigCenter;
     public GameObject LittleTerrain;
     public GameObject LittleCenter;
-    public GameObject CheckPoint;
 
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+    private VRPlayer localPlayer;
 
     private void OnCollisionEnter(Collision collision)
     {
-        StartCoroutine(handleCollision(collision));   
+        StartCoroutine(HandleCollision(collision));   
     }
 
+    private VRPlayer GetPlayer() {
+        if (localPlayer == null) {
+            VRPlayer[] players = FindObjectsOfType<VRPlayer>() as VRPlayer[];
+            foreach (var player in players) {
+                if (player.GetComponent<NetworkIdentity>().isLocalPlayer) {
+                    localPlayer = player;
+                    break;
+                }
+            }
+        }
+
+        return localPlayer;
+    }
 
     // Determines what hit the floor, and then performs the appropriate action
-    private IEnumerator handleCollision(Collision collision)
+    private IEnumerator HandleCollision(Collision collision)
     {
 		if (collision.gameObject.GetComponent<TaskCube>() != null && 
             collision.rigidbody.isKinematic == false) {
@@ -50,31 +51,11 @@ public class LittleTerrainScript : NetworkBehaviour
             differencePos.z += differencePos.z * 100;
             //differencePos = differencePos * 100f;
             Vector3 newPos = BigCenter.transform.position + differencePos;
+            collision.rigidbody.useGravity = false;
 
-
-			GameObject newTask = GameObject.Instantiate(TaskObject);
-			newTask.transform.localScale += new Vector3(10, 10, 10);
-			newTask.transform.position += newPos;
-			//Network.Instantiate (TaskObject, newPos, Quaternion.identity, 0);
-
-			//create checkpoint
-			GameObject newCheckPoint = GameObject.Instantiate(CheckPoint);
-			newCheckPoint.transform.position += newPos;
-			newCheckPoint.transform.parent = newTask.transform;
-
-			//disable renderer on the taskObject container so that it can be used as a task boundary
-			newTask.transform.GetComponent<Renderer>().enabled = false;
-			newTask.GetComponent<Rigidbody>().useGravity = true;
-			newTask.GetComponent<Rigidbody>().isKinematic= false;
-			collision.rigidbody.useGravity = false;
-
-			NetworkServer.Spawn (newTask);
-			NetworkServer.Spawn (newCheckPoint);
-
-            //create the taskObject in the correct location on the big terrain
-
-                
+            GetPlayer().CmdInstantiateTaskObjects(newPos);
         }
+
         yield return null;
     }
 }

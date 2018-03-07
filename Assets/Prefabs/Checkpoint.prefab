@@ -22,8 +22,9 @@ GameObject:
   - component: {fileID: 33138867536348270}
   - component: {fileID: 136391293196005710}
   - component: {fileID: 23919255456520798}
+  - component: {fileID: 114542364279278088}
   m_Layer: 0
-  m_Name: CheckPoint 1
+  m_Name: Checkpoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -83,6 +84,38 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1313108793557400}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &114542364279278088
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1313108793557400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 139
+    i1: 218
+    i2: 19
+    i3: 132
+    i4: 128
+    i5: 78
+    i6: 128
+    i7: 36
+    i8: 10
+    i9: 200
+    i10: 60
+    i11: 176
+    i12: 102
+    i13: 37
+    i14: 45
+    i15: 226
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 1
 --- !u!136 &136391293196005710
 CapsuleCollider:
   m_ObjectHideFlags: 1
