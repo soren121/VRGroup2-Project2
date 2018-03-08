@@ -799,6 +799,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 54678728591231920, guid: 9ea398811f782df47a451afc043bb1a4,
+        type: 2}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9ea398811f782df47a451afc043bb1a4, type: 2}
   m_IsPrefabParent: 0
@@ -1092,57 +1097,6 @@ Prefab:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ad8bf2b86b8734b0b9cc0adb8d14e002, type: 2}
-  m_IsPrefabParent: 0
---- !u!1001 &884098043
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4399551545584730, guid: 9ea398811f782df47a451afc043bb1a4, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 1.821
-      objectReference: {fileID: 0}
-    - target: {fileID: 4399551545584730, guid: 9ea398811f782df47a451afc043bb1a4, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 1.763
-      objectReference: {fileID: 0}
-    - target: {fileID: 4399551545584730, guid: 9ea398811f782df47a451afc043bb1a4, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 1.186
-      objectReference: {fileID: 0}
-    - target: {fileID: 4399551545584730, guid: 9ea398811f782df47a451afc043bb1a4, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4399551545584730, guid: 9ea398811f782df47a451afc043bb1a4, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4399551545584730, guid: 9ea398811f782df47a451afc043bb1a4, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4399551545584730, guid: 9ea398811f782df47a451afc043bb1a4, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4399551545584730, guid: 9ea398811f782df47a451afc043bb1a4, type: 2}
-      propertyPath: m_RootOrder
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 1488817156548712, guid: 9ea398811f782df47a451afc043bb1a4, type: 2}
-      propertyPath: m_Name
-      value: TaskCube (3)
-      objectReference: {fileID: 0}
-    - target: {fileID: 54678728591231920, guid: 9ea398811f782df47a451afc043bb1a4,
-        type: 2}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 9ea398811f782df47a451afc043bb1a4, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &919630901 stripped
 GameObject:

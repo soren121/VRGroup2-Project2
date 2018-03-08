@@ -96,7 +96,7 @@ public class HandController : MonoBehaviour {
 		if (rb != null)
 		{
 			
-			attachedKinematicSave = rb.isKinematic;
+			attachedKinematicSave = !rb.isKinematic;
 			attachedMaxAngularVelSave = rb.maxAngularVelocity;
 			attachedUseGravitySave = rb.useGravity;
 			rb.maxAngularVelocity = Mathf.Infinity;
